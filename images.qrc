@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/document-open.png</file>
+        <file>icons/application-exit.png</file>
+        <file>icons/help-about.png</file>
+        <file>icons/document-save.png</file>
+        <file>icons/edit-find-replace.png</file>
+        <file>icons/edit-find.png</file>
+        <file>icons/emblem-photos.png</file>
+        <file>icons/edit-delete.png</file>
+        <file>icons/insert-image.png</file>
+    </qresource>
+</RCC>
