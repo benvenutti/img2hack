@@ -1,5 +1,8 @@
 #include "model/writer.h"
 
+#include <bitset>
+#include <string>
+
 #include "model/hack.h"
 
 using namespace std;
@@ -20,23 +23,26 @@ int Writer::compile()
 
     for (auto w: words) {
 
+        bitset<16> bin(w.first);
+        string comment("\t// word: ");
+
         if (w.first == -1 || w.first == 1) {
-            output << "D=" << w.first << endl;
+            output << "D=" << w.first << comment << bin << endl;
             numOps++;
         }
         else if (w.first == 0)
             continue;
         else if (w.first == -32768) {
-            output << "@" << (w.first * (-1) - 1) << endl;
+            output << "@" << (w.first * (-1) - 1) << comment << bin << endl;
             output << "D=!A" << endl;
             numOps += 2;
         }
         else if (w.first < 0){
-            output << "@" << w.first * (-1) << endl;
+            output << "@" << w.first * (-1) << comment << bin << endl;
             output << "D=-A" << endl;
             numOps += 2;
         } else {
-            output << "@" << w.first << endl;
+            output << "@" << w.first << comment << bin << endl;
             output << "D=A" << endl;
             numOps += 2;
         }
