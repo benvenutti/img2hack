@@ -21,6 +21,16 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+      env:
+        - COMPILER_CXX=clang++
+        - COMPILER_CC=clang
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.7
           packages:
             - clang++-3.7
