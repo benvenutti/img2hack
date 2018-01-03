@@ -19,8 +19,8 @@ sudo: required
 dist: trusty
 
 before_install:
-  - ci/travis-system-info.sh
   - ci/travis-before-install.sh
+  - ci/travis-system-info.sh
 
 script:
   - ci/travis-script.sh
