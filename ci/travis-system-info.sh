@@ -3,4 +3,5 @@
 qmake --version
 cmake --version
 uname -a
-$COMPILER --version
+$COMPILER_CXX --version
+$COMPILER_CC --version
