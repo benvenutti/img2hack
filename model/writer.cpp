@@ -1,9 +1,9 @@
-#include "model/writer.h"
+#include "writer.h"
 
 #include <bitset>
 #include <string>
 
-#include "model/hack.h"
+#include "hack.h"
 
 using namespace std;
 
