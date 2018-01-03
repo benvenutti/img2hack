@@ -1,0 +1,29 @@
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+            - gcc-4.9
+      env:
+        - COMPILER_CXX=g++-4.9
+        - COMPILER_CC=gcc-4.9
+
+sudo: required
+dist: trusty
+
+before_install:
+  - ci/travis-system-info.sh
+  - ci/travis-before-install.sh
+
+script:
+  - ci/travis-script.sh
+
+notifications:
+  email: false
