@@ -39,6 +39,13 @@ matrix:
         - COMPILER_CXX=clang++-3.7
         - COMPILER_CC=clang-3.7
 
+    - os: osx
+      osx_image: xcode8
+      compiler: clang
+      env:
+        - COMPILER_CXX=clang++
+        - COMPILER_CC=clang
+
 sudo: required
 dist: trusty
 
