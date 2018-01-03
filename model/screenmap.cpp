@@ -1,6 +1,6 @@
-#include "model/screenmap.h"
+#include "screenmap.h"
 
-#include "model/hack.h"
+#include "hack.h"
 
 using namespace Magick;
 using namespace std;

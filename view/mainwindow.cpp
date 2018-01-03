@@ -1,4 +1,4 @@
-#include "view/mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include <iostream>
@@ -7,7 +7,7 @@
 #include "model/hack.h"
 #include "model/screenmap.h"
 #include "model/writer.h"
-#include "view/aboutdialog.h"
+#include "aboutdialog.h"
 
 using namespace Magick;
 
