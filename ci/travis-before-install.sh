@@ -6,6 +6,11 @@ if [ "$TRAVIS_OS_NAME" == "linux" ]; then
   sudo -E apt-get install -y qt5-default libmagick++-dev
 elif [ "$TRAVIS_OS_NAME" == "osx" ]; then
   brew update
-  brew install imagemagick --with-magick-plus-plus
-  brew install qt@5.5
+  brew install imagemagick qt
+  brew link --force qt
+
+  # testing solution:
+  brew info imagemagick
+  brew --prefix imagemagick
+  echo $PATH
 fi
