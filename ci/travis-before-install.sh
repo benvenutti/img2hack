@@ -7,10 +7,4 @@ if [ "$TRAVIS_OS_NAME" == "linux" ]; then
 elif [ "$TRAVIS_OS_NAME" == "osx" ]; then
   brew update
   brew install imagemagick qt
-  brew link --force qt
-
-  # testing solution:
-  brew info imagemagick
-  brew --prefix imagemagick
-  echo $PATH
 fi
