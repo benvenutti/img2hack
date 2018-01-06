@@ -93,7 +93,7 @@ void MainWindow::renderImage()
 void MainWindow::processImage()
 {
     Image img = image;
-    double th = (threshold / 100.0) * MaxRGB;
+    double th = (threshold / 100.0) * QuantumRange;
     img.threshold(th);
 
     if (negate)

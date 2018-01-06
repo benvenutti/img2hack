@@ -1,0 +1,60 @@
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+            - gcc-4.9
+      env:
+        - COMPILER_CXX=g++-4.9
+        - COMPILER_CC=gcc-4.9
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+      env:
+        - COMPILER_CXX=clang++
+        - COMPILER_CC=clang
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.7
+          packages:
+            - clang++-3.7
+            - clang-3.7
+      env:
+        - COMPILER_CXX=clang++-3.7
+        - COMPILER_CC=clang-3.7
+
+    - os: osx
+      osx_image: xcode8
+      compiler: clang
+      env:
+        - COMPILER_CXX=clang++
+        - COMPILER_CC=clang
+
+sudo: required
+dist: trusty
+
+before_install:
+  - ci/travis-before-install.sh
+  - ci/travis-system-info.sh
+
+script:
+  - ci/travis-script.sh
+
+notifications:
+  email: false

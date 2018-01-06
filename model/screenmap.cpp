@@ -41,7 +41,7 @@ void ScreenMap::readImage()
 
             ColorRGB c(image.pixelColor(j, i));
 
-            if (c.red() * MaxRGB == 0) {
+            if (c.red() * QuantumRange == 0) {
                 word = word | mask;
             }
 
