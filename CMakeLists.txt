@@ -36,8 +36,12 @@ set(ui_files
   view/aboutdialog.ui
   view/mainwindow.ui)
 
+set(qrc_files
+  images.qrc)
+
 qt5_wrap_cpp(header_files_moc ${header_files})
 qt5_wrap_ui(ui_files_moc ${ui_files})
+qt5_add_resources(resources_files ${qrc_files})
 
 ## executable:
 
@@ -45,7 +49,8 @@ add_executable(${PROJECT_NAME}
   ${source_files}
   ${header_files}
   ${header_files_moc}
-  ${ui_files_moc})
+  ${ui_files_moc}
+  ${resources_files})
 
 target_include_directories(${PROJECT_NAME}
   PRIVATE
