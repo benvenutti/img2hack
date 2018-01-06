@@ -1,4 +1,4 @@
-#img2hack
+# img2hack [![Build Status](https://travis-ci.org/benvenutti/img2hack.svg?branch=master)](https://travis-ci.org/benvenutti/img2hack) [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) [![Github Issues](https://img.shields.io/github/issues/benvenutti/img2hack.svg)](http://github.com/benvenutti/img2hack/issues) [![Github Releases](https://img.shields.io/github/release/benvenutti/img2hack.svg)](https://github.com/benvenutti/img2hack/releases)
 
 *Convert images into HACK assembly code*
 
