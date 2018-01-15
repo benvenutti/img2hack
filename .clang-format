@@ -1,0 +1,9 @@
+BasedOnStyle: LLVM
+Cpp11BracedListStyle: false
+PointerAlignment: Left
+ColumnLimit: 100
+UseTab: Never
+AlwaysBreakTemplateDeclarations: true
+BreakConstructorInitializersBeforeComma: true
+ConstructorInitializerIndentWidth: 0
+AllowShortFunctionsOnASingleLine: Inline
