@@ -22,7 +22,10 @@ target_include_directories(${PROJECT_NAME}
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
   PRIVATE
-    include/model
+    include/model)
+
+target_include_directories(${PROJECT_NAME}
+  SYSTEM PRIVATE
     ${ImageMagick_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}

@@ -32,11 +32,13 @@ add_executable(${PROJECT_NAME}
   ${resources_files})
 
 target_include_directories(${PROJECT_NAME}
-  PUBLIC
-    ${ImageMagick_INCLUDE_DIRS}
   PRIVATE
     ${PROJECT_BINARY_DIR}
     ${PROJECT_SOURCE_DIR})
+
+target_include_directories(${PROJECT_NAME}
+  SYSTEM PUBLIC
+    ${ImageMagick_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
