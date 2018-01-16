@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(img2hack VERSION 0.1.0 LANGUAGES CXX)
 
+## modules:
+
+include(GNUInstallDirs)
+
 ## build settings:
 
 set(CMAKE_CXX_STANDARD 11)
@@ -10,8 +14,6 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(CMAKE_CXX_FLAGS_RELEASE -O2)
-
-include(GNUInstallDirs)
 
 ## 3rd party dependencies:
 

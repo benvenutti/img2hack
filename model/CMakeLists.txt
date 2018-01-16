@@ -1,8 +1,21 @@
-project(model VERSION 0.1.0 LANGUAGES CXX)
+project(model LANGUAGES CXX)
 
-add_library(${PROJECT_NAME}
+## files:
+
+set(source_files
   src/ScreenMap.cpp
   src/Writer.cpp)
+
+set(header_files
+  include/model/Hack.hpp
+  include/model/ScreenMap.hpp
+  include/model/Writer.hpp)
+
+## library:
+
+add_library(${PROJECT_NAME}
+  ${source_files}
+  ${header_files})
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC
@@ -15,6 +28,8 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
     ${ImageMagick_LIBRARIES})
+
+## install:
 
 install(TARGETS ${PROJECT_NAME}
   EXPORT "${PROJECT_NAME}Config"

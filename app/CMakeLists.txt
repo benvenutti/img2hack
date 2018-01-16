@@ -1,4 +1,6 @@
-project(app VERSION 0.1.0 LANGUAGES CXX)
+project(img2hack-gui LANGUAGES CXX)
+
+## files:
 
 set(source_files
   src/AboutDialog.cpp
@@ -30,13 +32,15 @@ add_executable(${PROJECT_NAME}
   ${resources_files})
 
 target_include_directories(${PROJECT_NAME}
-  PRIVATE
+  PUBLIC
     ${ImageMagick_INCLUDE_DIRS}
+  PRIVATE
     ${PROJECT_BINARY_DIR}
     ${PROJECT_SOURCE_DIR})
 
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
-    model
     ${ImageMagick_LIBRARIES}
-    Qt5::Widgets)
+    Qt5::Widgets
+  PRIVATE
+    model)
