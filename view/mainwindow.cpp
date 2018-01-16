@@ -5,9 +5,9 @@
 #include <iostream>
 
 #include "aboutdialog.h"
-#include "model/hack.h"
-#include "model/screenmap.h"
-#include "model/writer.h"
+#include "model/Hack.hpp"
+#include "model/ScreenMap.hpp"
+#include "model/Writer.hpp"
 
 using namespace Magick;
 

@@ -11,24 +11,25 @@ endif()
 
 set(CMAKE_CXX_FLAGS_RELEASE -O2)
 
+include(GNUInstallDirs)
+
 ## 3rd party dependencies:
 
 find_package(ImageMagick COMPONENTS Magick++ REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
+## model:
+
+add_subdirectory(model)
+
 ## files:
 
 set(source_files
-  model/screenmap.cpp
-  model/writer.cpp
   view/aboutdialog.cpp
   view/mainwindow.cpp
   main.cpp)
 
 set(header_files
-  model/hack.h
-  model/screenmap.h
-  model/writer.h
   view/aboutdialog.h
   view/mainwindow.h)
 
@@ -58,7 +59,8 @@ target_include_directories(${PROJECT_NAME}
     ${PROJECT_BINARY_DIR}
     ${PROJECT_SOURCE_DIR})
 
-target_link_libraries (${PROJECT_NAME}
+target_link_libraries(${PROJECT_NAME}
   PUBLIC
+    model
     ${ImageMagick_LIBRARIES}
     Qt5::Widgets)
