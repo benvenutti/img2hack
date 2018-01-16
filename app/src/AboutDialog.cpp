@@ -1,5 +1,5 @@
-#include "aboutdialog.h"
-#include "ui_aboutdialog.h"
+#include "AboutDialog.hpp"
+#include "ui_AboutDialog.h"
 
 #include <QDesktopServices>
 #include <QUrl>

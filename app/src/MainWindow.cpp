@@ -1,10 +1,10 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "MainWindow.hpp"
+#include "ui_MainWindow.h"
 
 #include <QFileDialog>
 #include <iostream>
 
-#include "aboutdialog.h"
+#include "AboutDialog.hpp"
 #include "model/Hack.hpp"
 #include "model/ScreenMap.hpp"
 #include "model/Writer.hpp"
