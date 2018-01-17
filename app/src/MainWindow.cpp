@@ -51,10 +51,10 @@ void MainWindow::logOpenFile(QString fileName) {
   int h = img.rows();
   QString s("  w: " + QString::number(w) + " h:" + QString::number(h));
 
-  if (w > HACK::SCREEN_WIDTH || h > HACK::SCREEN_HEIGHT) {
+  if (w > Hack::SCREEN_WIDTH || h > Hack::SCREEN_HEIGHT) {
     s += " -> cropped to w: ";
-    s += QString::number(HACK::SCREEN_WIDTH);
-    s += " h:" + QString::number(HACK::SCREEN_HEIGHT);
+    s += QString::number(Hack::SCREEN_WIDTH);
+    s += " h:" + QString::number(Hack::SCREEN_HEIGHT);
   }
 
   log(s);
@@ -137,7 +137,7 @@ void MainWindow::on_btOpenImage_clicked() {
   if (fileName.isEmpty())
     return;
 
-  Geometry geometry(HACK::SCREEN_WIDTH, HACK::SCREEN_HEIGHT);
+  Geometry geometry(Hack::SCREEN_WIDTH, Hack::SCREEN_HEIGHT);
   image.size(geometry);
 
   try {

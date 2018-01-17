@@ -41,7 +41,7 @@ int Writer::compile() {
     }
 
     for (auto adr : words.at(w.first)) {
-      output << "@" << (HACK::SCREEN_ADR + adr) << endl;
+      output << "@" << (Hack::SCREEN_ADR + adr) << endl;
       output << "M=D" << endl;
       numOps += 2;
     }

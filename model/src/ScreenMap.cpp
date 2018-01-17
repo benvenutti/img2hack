@@ -32,8 +32,8 @@ void ScreenMap::readImage() {
   uint16_t mask = 1;
   int adr = 0;
 
-  for (int i = 0; i < HACK::SCREEN_HEIGHT; ++i) {
-    for (int j = 0; j < HACK::SCREEN_WIDTH; ++j) {
+  for (int i = 0; i < Hack::SCREEN_HEIGHT; ++i) {
+    for (int j = 0; j < Hack::SCREEN_WIDTH; ++j) {
 
       ColorRGB c(image.pixelColor(j, i));
 
@@ -44,7 +44,7 @@ void ScreenMap::readImage() {
       mask <<= 1;
       counter++;
 
-      if (counter > HACK::WORD_SIZE - 1) {
+      if (counter > Hack::WORD_SIZE - 1) {
         add(word, adr);
         counter = 0;
         word = 0;
