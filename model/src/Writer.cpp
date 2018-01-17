@@ -1,9 +1,9 @@
-#include "writer.h"
+#include "Writer.hpp"
 
 #include <bitset>
 #include <string>
 
-#include "hack.h"
+#include "Hack.hpp"
 
 using namespace std;
 

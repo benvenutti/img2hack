@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(img2hack VERSION 0.1.0 LANGUAGES CXX)
 
+## cmake modules:
+
+include(GNUInstallDirs)
+
 ## build settings:
 
 set(CMAKE_CXX_STANDARD 11)
@@ -16,49 +20,19 @@ set(CMAKE_CXX_FLAGS_RELEASE -O2)
 find_package(ImageMagick COMPONENTS Magick++ REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
-## files:
+## compiler definitions:
 
-set(source_files
-  model/screenmap.cpp
-  model/writer.cpp
-  view/aboutdialog.cpp
-  view/mainwindow.cpp
-  main.cpp)
+if(MSVC)
+  add_compile_options(/W4 /w14545 /w34242 /w34254 /w34287 /w44263 /w44265
+    /w44296 /w44311 /w44826 /we4289 /w14546 /w14547 /w14549 /w14555 /w14619
+    /w14905 /w14906 /w14928)
+else()
+  add_compile_options(-Wall -Wextra -Wconversion -Wsign-conversion -Wshadow
+    -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wcast-qual -Wunused
+    -Woverloaded-virtual -pedantic)
+endif()
 
-set(header_files
-  model/hack.h
-  model/screenmap.h
-  model/writer.h
-  view/aboutdialog.h
-  view/mainwindow.h)
+## projects:
 
-set(ui_files
-  view/aboutdialog.ui
-  view/mainwindow.ui)
-
-set(qrc_files
-  images.qrc)
-
-qt5_wrap_cpp(header_files_moc ${header_files})
-qt5_wrap_ui(ui_files_moc ${ui_files})
-qt5_add_resources(resources_files ${qrc_files})
-
-## executable:
-
-add_executable(${PROJECT_NAME}
-  ${source_files}
-  ${header_files}
-  ${header_files_moc}
-  ${ui_files_moc}
-  ${resources_files})
-
-target_include_directories(${PROJECT_NAME}
-  PRIVATE
-    ${ImageMagick_INCLUDE_DIRS}
-    ${PROJECT_BINARY_DIR}
-    ${PROJECT_SOURCE_DIR})
-
-target_link_libraries (${PROJECT_NAME}
-  PUBLIC
-    ${ImageMagick_LIBRARIES}
-    Qt5::Widgets)
+add_subdirectory(app)
+add_subdirectory(model)

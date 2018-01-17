@@ -1,13 +1,13 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "MainWindow.hpp"
+#include "ui_MainWindow.h"
 
 #include <QFileDialog>
 #include <iostream>
 
-#include "aboutdialog.h"
-#include "model/hack.h"
-#include "model/screenmap.h"
-#include "model/writer.h"
+#include "AboutDialog.hpp"
+#include "model/Hack.hpp"
+#include "model/ScreenMap.hpp"
+#include "model/Writer.hpp"
 
 using namespace Magick;
 
