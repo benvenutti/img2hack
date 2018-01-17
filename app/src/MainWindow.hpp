@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QFileInfo>
 #include <QMainWindow>
@@ -56,5 +55,3 @@ private:
   bool negate;
   int threshold;
 };
-
-#endif // MAINWINDOW_H

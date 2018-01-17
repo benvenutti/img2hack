@@ -1,5 +1,4 @@
-#ifndef ABOUTDIALOG_H
-#define ABOUTDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -22,5 +21,3 @@ private:
   Ui::AboutDialog* ui;
   QString url;
 };
-
-#endif // ABOUTDIALOG_H

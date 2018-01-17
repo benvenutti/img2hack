@@ -1,5 +1,4 @@
-#ifndef SCREENMAP_H
-#define SCREENMAP_H
+#pragma once
 
 #include <Magick++.h>
 #include <inttypes.h>
@@ -18,5 +17,3 @@ private:
   Magick::Image image;
   std::map<int16_t, std::set<int>> words;
 };
-
-#endif // SCREENMAP_H

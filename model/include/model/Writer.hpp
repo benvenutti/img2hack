@@ -1,5 +1,4 @@
-#ifndef WRITER_H
-#define WRITER_H
+#pragma once
 
 #include <fstream>
 #include <inttypes.h>
@@ -16,5 +15,3 @@ private:
   std::ofstream& output;
   std::map<int16_t, std::set<int>> words;
 };
-
-#endif
