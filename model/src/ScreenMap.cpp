@@ -2,28 +2,21 @@
 
 #include "Hack.hpp"
 
-using namespace Magick;
-using namespace std;
-
-ScreenMap::ScreenMap(Image img)
-: image(img) {
+ScreenMap::ScreenMap(Magick::Image image)
+: m_image{ image } {
   readImage();
 }
 
 void ScreenMap::add(int16_t word, int address) {
-  auto it = words.find(word);
-
-  if (it != words.end())
-    words.at(word).insert(address);
+  if (m_words.find(word) != m_words.end())
+    m_words.at(word).insert(address);
   else {
-    set<int> s;
-    s.insert(address);
-    words.insert(pair<int16_t, set<int>>(word, s));
+    m_words.emplace(word, std::set<int>{ address });
   }
 }
 
-map<int16_t, set<int>> ScreenMap::getMap() {
-  return words;
+const std::map<int16_t, std::set<int>>& ScreenMap::getMap() const {
+  return m_words;
 }
 
 void ScreenMap::readImage() {
@@ -35,10 +28,10 @@ void ScreenMap::readImage() {
   for (int i = 0; i < Hack::SCREEN_HEIGHT; ++i) {
     for (int j = 0; j < Hack::SCREEN_WIDTH; ++j) {
 
-      ColorRGB c(image.pixelColor(j, i));
+      Magick::ColorMono pixel{ m_image.pixelColor(j, i) };
 
-      if (c.red() * QuantumRange == 0) {
-        word = word | mask;
+      if (pixel.mono()) {
+        word |= mask;
       }
 
       mask <<= 1;
