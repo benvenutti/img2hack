@@ -1,16 +1,12 @@
 #pragma once
 
+#include <cstddef>
 #include <fstream>
 
 class ScreenMap;
 
-class Writer {
-public:
-  Writer(std::ofstream& output, const ScreenMap& screenMap);
+namespace Writer {
 
-  int compile();
+std::size_t compile(std::ofstream& out, const ScreenMap& screenMap);
 
-private:
-  std::ofstream& m_output;
-  const ScreenMap& m_screenMap;
-};
+} // namespace Writer

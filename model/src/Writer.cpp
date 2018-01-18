@@ -4,49 +4,53 @@
 #include "ScreenMap.hpp"
 
 #include <bitset>
-#include <string>
 
-Writer::Writer(std::ofstream& output, const ScreenMap& screenMap)
-: m_output(output)
-, m_screenMap(screenMap) {}
+namespace {
 
-int Writer::compile() {
-  int numOps = 0;
+constexpr auto comment = "  // word: ";
+constexpr auto newl = "\n";
 
-  for (auto w : m_screenMap) {
+} // anonymous namespace
 
-    std::bitset<16> bin(w.first);
-    std::string comment("\t// word: ");
+std::size_t Writer::compile(std::ofstream& out, const ScreenMap& screenMap) {
+  std::size_t numOps = 0;
 
-    if (w.first == -1 || w.first == 1) {
-      m_output << "D=" << w.first << comment << bin << std::endl;
-      numOps++;
-    } else if (w.first == 0)
+  for (auto w : screenMap) {
+    const auto word = w.first;
+
+    if (word == 0) {
       continue;
-    else if (w.first == -32768) {
-      m_output << "@" << (w.first * (-1) - 1) << comment << bin << std::endl;
-      m_output << "D=!A" << std::endl;
+    }
+
+    const std::bitset<16> bin{ word };
+
+    if (word == -1 || word == 1) {
+      out << "D=" << word << comment << bin << newl;
+      numOps++;
+    } else if (word == -32768) {
+      out << "@" << (word * (-1) - 1) << comment << bin << newl;
+      out << "D=!A" << newl;
       numOps += 2;
-    } else if (w.first < 0) {
-      m_output << "@" << w.first * (-1) << comment << bin << std::endl;
-      m_output << "D=-A" << std::endl;
+    } else if (word < 0) {
+      out << "@" << word * (-1) << comment << bin << newl;
+      out << "D=-A" << newl;
       numOps += 2;
     } else {
-      m_output << "@" << w.first << comment << bin << std::endl;
-      m_output << "D=A" << std::endl;
+      out << "@" << word << comment << bin << newl;
+      out << "D=A" << newl;
       numOps += 2;
     }
 
     for (auto adr : w.second) {
-      m_output << "@" << (Hack::SCREEN_ADR + adr) << std::endl;
-      m_output << "M=D" << std::endl;
+      out << "@" << (Hack::SCREEN_ADR + adr) << newl;
+      out << "M=D" << newl;
       numOps += 2;
     }
   }
 
-  m_output << "(END)" << std::endl; // does not count as op
-  m_output << "@END" << std::endl;
-  m_output << "0;JMP" << std::endl;
+  out << "(END)" << newl; // does not count as op
+  out << "@END" << newl;
+  out << "0;JMP" << newl;
   numOps += 2;
 
   return numOps;
