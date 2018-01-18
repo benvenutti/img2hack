@@ -22,7 +22,7 @@ std::size_t Writer::compile(std::ofstream& out, const ScreenMap& screenMap) {
       continue;
     }
 
-    const std::bitset<16> bin{ word };
+    const std::bitset<16> bin(word);
 
     if (word == -1 || word == 1) {
       out << "D=" << word << comment << bin << newl;
