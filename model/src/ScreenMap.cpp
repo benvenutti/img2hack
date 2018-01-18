@@ -2,12 +2,13 @@
 
 #include "Hack.hpp"
 
-ScreenMap::ScreenMap(Magick::Image image)
-: m_image{ image } {
-  readImage();
+#include <Magick++.h>
+
+ScreenMap::ScreenMap(const Magick::Image& image) {
+  read(image);
 }
 
-void ScreenMap::add(int16_t word, int address) {
+void ScreenMap::add(std::int16_t word, int address) {
   if (m_words.find(word) != m_words.end())
     m_words.at(word).insert(address);
   else {
@@ -15,22 +16,31 @@ void ScreenMap::add(int16_t word, int address) {
   }
 }
 
-const std::map<int16_t, std::set<int>>& ScreenMap::getMap() const {
-  return m_words;
+ScreenMap::iterator ScreenMap::begin() {
+  return m_words.begin();
 }
 
-void ScreenMap::readImage() {
+ScreenMap::const_iterator ScreenMap::begin() const {
+  return m_words.begin();
+}
+
+ScreenMap::iterator ScreenMap::end() {
+  return m_words.end();
+}
+
+ScreenMap::const_iterator ScreenMap::end() const {
+  return m_words.end();
+}
+
+void ScreenMap::read(const Magick::Image& image) {
   int counter = 0;
-  int16_t word = 0;
-  uint16_t mask = 1;
+  std::int16_t word = 0;
+  std::uint16_t mask = 1;
   int adr = 0;
 
-  for (int i = 0; i < Hack::SCREEN_HEIGHT; ++i) {
-    for (int j = 0; j < Hack::SCREEN_WIDTH; ++j) {
-
-      Magick::ColorMono pixel{ m_image.pixelColor(j, i) };
-
-      if (pixel.mono()) {
+  for (int y = 0; y < Hack::SCREEN_HEIGHT; ++y) {
+    for (int x = 0; x < Hack::SCREEN_WIDTH; ++x) {
+      if (Magick::ColorMono{ image.pixelColor(x, y) }.mono()) {
         word |= mask;
       }
 

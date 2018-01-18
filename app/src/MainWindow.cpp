@@ -226,7 +226,7 @@ void MainWindow::on_btExportToHACK_clicked() {
   QString path(inputFile.absoluteDir().absolutePath() + "/" + inputFile.baseName() + ".asm");
   std::ofstream outputFile(path.toStdString());
 
-  Writer writer(outputFile, screenMap.getMap());
+  Writer writer(outputFile, screenMap);
   int numLines = writer.compile();
 
   logExportToHack(inputFile.baseName() + ".asm", inputFile.absoluteDir().absolutePath(), numLines);

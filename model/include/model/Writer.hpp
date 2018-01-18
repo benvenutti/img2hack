@@ -1,17 +1,16 @@
 #pragma once
 
 #include <fstream>
-#include <inttypes.h>
-#include <map>
-#include <set>
+
+class ScreenMap;
 
 class Writer {
 public:
-  Writer(std::ofstream& output, std::map<int16_t, std::set<int>> words);
-  virtual ~Writer();
+  Writer(std::ofstream& output, const ScreenMap& screenMap);
+
   int compile();
 
 private:
-  std::ofstream& output;
-  std::map<int16_t, std::set<int>> words;
+  std::ofstream& m_output;
+  const ScreenMap& m_screenMap;
 };

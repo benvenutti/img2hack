@@ -1,20 +1,30 @@
 #pragma once
 
-#include <Magick++.h>
-
 #include <cstdint>
 #include <map>
 #include <set>
 
+namespace Magick {
+class Image;
+}
+
 class ScreenMap {
 public:
-  ScreenMap(Magick::Image image);
+  explicit ScreenMap(const Magick::Image& image);
+
   void add(std::int16_t word, int address);
-  const std::map<std::int16_t, std::set<int>>& getMap() const;
+
+  using PixelMap = std::map<std::int16_t, std::set<int>>;
+  using iterator = PixelMap::iterator;
+  using const_iterator = PixelMap::const_iterator;
+
+  iterator begin();
+  const_iterator begin() const;
+  iterator end();
+  const_iterator end() const;
 
 private:
-  void readImage();
+  void read(const Magick::Image& image);
 
-  Magick::Image m_image;
-  std::map<std::int16_t, std::set<int>> m_words;
+  PixelMap m_words;
 };
