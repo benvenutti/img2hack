@@ -10,7 +10,7 @@ include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 11)
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the build type" FORCE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the build type")
 endif()
 
 set(CMAKE_CXX_FLAGS_RELEASE -O2)

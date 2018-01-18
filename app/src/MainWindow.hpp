@@ -35,6 +35,7 @@ private slots:
 private:
   void processImage();
   void renderImage();
+  void render(Magick::Image& image);
   void log(QString message);
   void logExportToHack(QString filaName, QString path, int numLines);
   void logExportToImage(QString filaName, QString path);
@@ -44,9 +45,9 @@ private:
 
   Ui::MainWindow* ui;
 
-  Magick::Image image;
-  Magick::Blob blobOriginal;
-  Magick::Blob blobProcessed;
+  Magick::Image m_originalImage;
+  Magick::Image m_processedImage;
+
   QPixmap pixmap;
   QFileInfo inputFile;
   QString path;

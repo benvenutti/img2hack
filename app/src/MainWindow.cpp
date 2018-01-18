@@ -73,24 +73,34 @@ void MainWindow::logExportToImage(QString fileName, QString path) {
 
 void MainWindow::renderImage() {
   if (isOriginalView) {
-    pixmap.loadFromData((char*)blobOriginal.data(), "XPM");
+    render(m_originalImage);
   } else {
     processImage();
-    pixmap.loadFromData((char*)blobProcessed.data(), "XPM");
+    Magick::Image copy{ m_processedImage };
+    render(copy);
   }
+}
 
+void MainWindow::render(Magick::Image& image) {
+  constexpr auto format = "XPM";
+
+  Magick::Blob blob;
+  image.magick(format);
+  image.write(&blob, format);
+
+  pixmap.loadFromData(static_cast<const char*>(blob.data()), format);
+  ui->label->update();
   ui->label->setPixmap(pixmap);
 }
 
 void MainWindow::processImage() {
-  Image img = image;
-  double th = (threshold / 100.0) * QuantumRange;
-  img.threshold(th);
+  auto copy = m_originalImage;
+  copy.threshold((threshold / 100.0) * QuantumRange);
 
   if (negate)
-    img.negate();
+    copy.negate();
 
-  img.write(&blobProcessed, "XPM");
+  m_processedImage = copy;
 }
 
 void MainWindow::enableButtons(bool enable) {
@@ -138,12 +148,11 @@ void MainWindow::on_btOpenImage_clicked() {
     return;
 
   Geometry geometry(Hack::SCREEN_WIDTH, Hack::SCREEN_HEIGHT);
-  image.size(geometry);
+  m_originalImage.size(geometry);
 
   try {
-    Image imgTmp(fileName.toStdString());
-    image.composite(imgTmp, 0, 0);
-    image.write(&blobOriginal, "XPM");
+    m_originalImage.read(fileName.toStdString());
+    m_processedImage = m_originalImage;
   } catch (...) {
     log("> Invalid image file!");
     return;
@@ -220,8 +229,7 @@ void MainWindow::on_actionAbout_triggered() {
 }
 
 void MainWindow::on_btExportToHACK_clicked() {
-  Image img(blobProcessed);
-  ScreenMap screenMap(img);
+  ScreenMap screenMap{ m_processedImage };
 
   QString path(inputFile.absoluteDir().absolutePath() + "/" + inputFile.baseName() + ".asm");
   std::ofstream outputFile(path.toStdString());
@@ -240,8 +248,7 @@ void MainWindow::on_btExportToImage_clicked() {
   if (fileName.isEmpty())
     return;
 
-  Image img(blobProcessed);
-  img.write(fileName.toStdString());
+  m_processedImage.write(fileName.toStdString());
 
   QFileInfo info(fileName);
   logExportToImage(info.baseName() + ".asm", info.absoluteDir().absolutePath());
