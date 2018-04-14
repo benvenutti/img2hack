@@ -47,9 +47,9 @@ void MainWindow::resetControls() {
   ui->editThresholdValue->setText("50");
   ui->btInvertImage->setDefault(false);
 
-  isOriginalView = false;
-  negate = false;
-  threshold = 50;
+  m_isOriginalView = false;
+  m_negate = false;
+  m_threshold = 50;
 }
 
 void MainWindow::log(QString message) {
@@ -88,7 +88,7 @@ void MainWindow::logExportToImage(QString fileName, QString path) {
 }
 
 void MainWindow::renderImage() {
-  if (isOriginalView) {
+  if (m_isOriginalView) {
     render(m_originalImage);
   } else {
     processImage();
@@ -111,9 +111,9 @@ void MainWindow::render(Magick::Image& image) {
 
 void MainWindow::processImage() {
   auto copy = m_originalImage;
-  copy.threshold((threshold / 100.0) * QuantumRange);
+  copy.threshold((m_threshold / 100.0) * QuantumRange);
 
-  if (negate)
+  if (m_negate)
     copy.negate();
 
   m_processedImage = copy;
@@ -142,16 +142,16 @@ void MainWindow::enableButtons(bool enable) {
 }
 
 void MainWindow::invertImage() {
-  negate = !negate;
-  ui->btInvertImage->setDefault(negate);
-  isOriginalView = false;
+  m_negate = !m_negate;
+  ui->btInvertImage->setDefault(m_negate);
+  m_isOriginalView = false;
   renderImage();
 }
 
 void MainWindow::updateThresholdSlider(int value) {
   ui->editThresholdValue->setText(QString::number(value));
-  threshold = value;
-  isOriginalView = false;
+  m_threshold = value;
+  m_isOriginalView = false;
   renderImage();
 }
 
@@ -182,7 +182,7 @@ void MainWindow::openImage() {
   enableButtons(true);
   ui->editThresholdValue->setFocus();
 
-  isOriginalView = false;
+  m_isOriginalView = false;
   renderImage();
 }
 
@@ -199,23 +199,23 @@ void MainWindow::updateThresholdValue(const QString& value) {
 
   if (v > 100) {
     ui->editThresholdValue->setText("100");
-    threshold = 100;
+    m_threshold = 100;
   } else if (v < 0) {
     ui->editThresholdValue->setText("0");
-    threshold = 0;
+    m_threshold = 0;
   } else {
-    threshold = v;
+    m_threshold = v;
   }
 
-  ui->sliderThreshold->setValue(threshold);
-  isOriginalView = false;
+  ui->sliderThreshold->setValue(m_threshold);
+  m_isOriginalView = false;
   renderImage();
 }
 
 void MainWindow::changeView() {
-  isOriginalView = !isOriginalView;
+  m_isOriginalView = !m_isOriginalView;
 
-  if (isOriginalView) {
+  if (m_isOriginalView) {
     QIcon icon(":/icons/icons/edit-find.png");
     ui->btView->setIcon(icon);
     ui->txtView->setText("Original");

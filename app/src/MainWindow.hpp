@@ -52,7 +52,7 @@ private:
 
   AboutDialog m_aboutDlg;
 
-  bool isOriginalView;
-  bool negate;
-  int threshold;
+  bool m_isOriginalView;
+  bool m_negate;
+  int m_threshold;
 };
