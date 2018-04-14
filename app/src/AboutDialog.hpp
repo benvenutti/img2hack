@@ -10,14 +10,10 @@ class AboutDialog : public QDialog {
   Q_OBJECT
 
 public:
-  explicit AboutDialog(QString url, QWidget* parent = 0);
+  explicit AboutDialog(QString url, QWidget* parent = nullptr);
   ~AboutDialog();
-
-private slots:
-  void on_btLink_clicked();
-  void on_btOK_clicked();
 
 private:
   Ui::AboutDialog* ui;
-  QString url;
+  QString m_url;
 };
