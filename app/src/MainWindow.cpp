@@ -4,7 +4,6 @@
 #include <QFileDialog>
 #include <iostream>
 
-#include "AboutDialog.hpp"
 #include "model/Hack.hpp"
 #include "model/ScreenMap.hpp"
 #include "model/Writer.hpp"
@@ -14,9 +13,26 @@ using namespace Magick;
 MainWindow::MainWindow(QWidget* parent)
 : QMainWindow(parent)
 , ui(new Ui::MainWindow)
-, path("") {
+, m_path("")
+, m_aboutDlg("https://github.com/benvenutti/img2hack", this) {
   ui->setupUi(this);
-  setFixedSize(this->width(), this->height());
+
+  connect(ui->btOpenImage, SIGNAL(clicked()), this, SLOT(openImage()));
+  connect(ui->btCloseImage, SIGNAL(clicked()), this, SLOT(closeImage()));
+  connect(ui->btExportToHACK, SIGNAL(clicked()), this, SLOT(exportToHack()));
+  connect(ui->btExportToImage, SIGNAL(clicked()), this, SLOT(exportToImage()));
+  connect(ui->btInvertImage, SIGNAL(clicked()), this, SLOT(invertImage()));
+  connect(ui->btView, SIGNAL(clicked()), this, SLOT(changeView()));
+
+  connect(ui->sliderThreshold, SIGNAL(valueChanged(int)), this, SLOT(updateThresholdSlider(int)));
+
+  connect(ui->editThresholdValue, SIGNAL(textChanged(QString)), this,
+          SLOT(updateThresholdValue(QString)));
+
+  connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
+  connect(ui->actionAbout, &QAction::triggered, [this]() { m_aboutDlg.exec(); });
+
+  setFixedSize(width(), height());
   statusBar()->hide();
   enableButtons(false);
   resetControls();
@@ -51,10 +67,10 @@ void MainWindow::logOpenFile(QString fileName) {
   int h = img.rows();
   QString s("  w: " + QString::number(w) + " h:" + QString::number(h));
 
-  if (w > Hack::SCREEN_WIDTH || h > Hack::SCREEN_HEIGHT) {
+  if (w > Hack::screen_width || h > Hack::screen_height) {
     s += " -> cropped to w: ";
-    s += QString::number(Hack::SCREEN_WIDTH);
-    s += " h:" + QString::number(Hack::SCREEN_HEIGHT);
+    s += QString::number(Hack::screen_width);
+    s += " h:" + QString::number(Hack::screen_height);
   }
 
   log(s);
@@ -88,9 +104,9 @@ void MainWindow::render(Magick::Image& image) {
   image.magick(format);
   image.write(&blob, format);
 
-  pixmap.loadFromData(static_cast<const char*>(blob.data()), format);
+  m_pixmap.loadFromData(static_cast<const char*>(blob.data()), format);
   ui->label->update();
-  ui->label->setPixmap(pixmap);
+  ui->label->setPixmap(m_pixmap);
 }
 
 void MainWindow::processImage() {
@@ -125,29 +141,29 @@ void MainWindow::enableButtons(bool enable) {
   }
 }
 
-void MainWindow::on_btInvertImage_clicked() {
+void MainWindow::invertImage() {
   negate = !negate;
   ui->btInvertImage->setDefault(negate);
   isOriginalView = false;
   renderImage();
 }
 
-void MainWindow::on_sliderThreshold_valueChanged(int value) {
+void MainWindow::updateThresholdSlider(int value) {
   ui->editThresholdValue->setText(QString::number(value));
   threshold = value;
   isOriginalView = false;
   renderImage();
 }
 
-void MainWindow::on_btOpenImage_clicked() {
+void MainWindow::openImage() {
   QFileDialog fileDialog;
   QString fileName =
-      fileDialog.getOpenFileName(this, tr("Open Image File"), path, tr("Files (*.*)"));
+      fileDialog.getOpenFileName(this, tr("Open Image File"), m_path, tr("Files (*.*)"));
 
   if (fileName.isEmpty())
     return;
 
-  Geometry geometry(Hack::SCREEN_WIDTH, Hack::SCREEN_HEIGHT);
+  Geometry geometry(Hack::screen_width, Hack::screen_height);
   m_originalImage.size(geometry);
 
   try {
@@ -158,8 +174,8 @@ void MainWindow::on_btOpenImage_clicked() {
     return;
   }
 
-  inputFile.setFile(fileName);
-  path = inputFile.absoluteDir().absolutePath();
+  m_inputFile.setFile(fileName);
+  m_path = m_inputFile.absoluteDir().absolutePath();
   ui->console->clear();
   logOpenFile(fileName);
   resetControls();
@@ -170,32 +186,33 @@ void MainWindow::on_btOpenImage_clicked() {
   renderImage();
 }
 
-void MainWindow::on_editThresholdValue_textChanged(const QString& arg1) {
+void MainWindow::updateThresholdValue(const QString& value) {
   QRegExp re("\\d*");
 
-  if (!re.exactMatch(arg1)) {
-    QString val = arg1.left(arg1.length() - 1);
+  if (!re.exactMatch(value)) {
+    QString val = value.left(value.length() - 1);
     ui->editThresholdValue->setText(val);
     return;
   }
 
-  int value = arg1.toInt();
+  int v = value.toInt();
 
-  if (value > 100) {
+  if (v > 100) {
     ui->editThresholdValue->setText("100");
     threshold = 100;
-  } else if (value < 0) {
+  } else if (v < 0) {
     ui->editThresholdValue->setText("0");
     threshold = 0;
-  } else
-    threshold = value;
+  } else {
+    threshold = v;
+  }
 
   ui->sliderThreshold->setValue(threshold);
   isOriginalView = false;
   renderImage();
 }
 
-void MainWindow::on_btView_clicked() {
+void MainWindow::changeView() {
   isOriginalView = !isOriginalView;
 
   if (isOriginalView) {
@@ -211,38 +228,22 @@ void MainWindow::on_btView_clicked() {
   renderImage();
 }
 
-void MainWindow::on_actionOpen_triggered() {
-  on_btOpenImage_clicked();
-}
-
-void MainWindow::on_actionExport_triggered() {
-  on_btExportToHACK_clicked();
-}
-
-void MainWindow::on_actionExit_triggered() {
-  this->close();
-}
-
-void MainWindow::on_actionAbout_triggered() {
-  AboutDialog aboutDialog("https://github.com/benvenutti/img2hack", this);
-  aboutDialog.exec();
-}
-
-void MainWindow::on_btExportToHACK_clicked() {
+void MainWindow::exportToHack() {
   ScreenMap screenMap{ m_processedImage };
 
-  QString path(inputFile.absoluteDir().absolutePath() + "/" + inputFile.baseName() + ".asm");
+  QString path(m_inputFile.absoluteDir().absolutePath() + "/" + m_inputFile.baseName() + ".asm");
   std::ofstream outputFile(path.toStdString());
 
   const auto numLines = Writer::compile(outputFile, screenMap);
 
-  logExportToHack(inputFile.baseName() + ".asm", inputFile.absoluteDir().absolutePath(), numLines);
+  logExportToHack(m_inputFile.baseName() + ".asm", m_inputFile.absoluteDir().absolutePath(),
+                  numLines);
 
   if (outputFile.is_open())
     outputFile.close();
 }
 
-void MainWindow::on_btExportToImage_clicked() {
+void MainWindow::exportToImage() {
   QString fileName = QFileDialog::getSaveFileName(this, tr("Save to Image"), "", tr("Files (*.*)"));
 
   if (fileName.isEmpty())
@@ -254,7 +255,7 @@ void MainWindow::on_btExportToImage_clicked() {
   logExportToImage(info.baseName() + ".asm", info.absoluteDir().absolutePath());
 }
 
-void MainWindow::on_btCloseImage_clicked() {
+void MainWindow::closeImage() {
   ui->console->clear();
   enableButtons(false);
   resetControls();

@@ -27,7 +27,7 @@ std::size_t Writer::compile(std::ofstream& out, const ScreenMap& screenMap) {
     if (word == -1 || word == 1) {
       out << "D=" << word << comment << bin << newl;
       numOps++;
-    } else if (word == -32768) {
+    } else if (word == -32768) { // TODO magic number?
       out << "@" << (word * (-1) - 1) << comment << bin << newl;
       out << "D=!A" << newl;
       numOps += 2;
@@ -41,8 +41,8 @@ std::size_t Writer::compile(std::ofstream& out, const ScreenMap& screenMap) {
       numOps += 2;
     }
 
-    for (auto adr : w.second) {
-      out << "@" << (Hack::SCREEN_ADR + adr) << newl;
+    for (auto addr : w.second) {
+      out << "@" << (Hack::screen_addr + addr) << newl;
       out << "M=D" << newl;
       numOps += 2;
     }

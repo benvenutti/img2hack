@@ -12,19 +12,14 @@ class ScreenMap {
 public:
   explicit ScreenMap(const Magick::Image& image);
 
-  void add(std::int16_t word, int address);
-
-  using PixelMap = std::map<std::int16_t, std::set<int>>;
-  using iterator = PixelMap::iterator;
-  using const_iterator = PixelMap::const_iterator;
-
-  iterator begin();
-  const_iterator begin() const;
-  iterator end();
-  const_iterator end() const;
+  auto begin() { return m_words.begin(); }
+  auto begin() const { return m_words.begin(); }
+  auto end() { return m_words.end(); }
+  auto end() const { return m_words.end(); }
 
 private:
+  void add(std::int16_t word, int address);
   void read(const Magick::Image& image);
 
-  PixelMap m_words;
+  std::map<std::int16_t, std::set<int>> m_words;
 };

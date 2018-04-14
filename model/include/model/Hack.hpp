@@ -2,9 +2,9 @@
 
 namespace Hack {
 
-constexpr int WORD_SIZE = 16;
-constexpr int SCREEN_ADR = 16384;
-constexpr int SCREEN_WIDTH = 512;
-constexpr int SCREEN_HEIGHT = 256;
+constexpr int word_size = 16;
+constexpr int screen_addr = 16384;
+constexpr int screen_width = 512;
+constexpr int screen_height = 256;
 
 } // namespace Hack
