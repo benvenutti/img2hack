@@ -5,10 +5,12 @@
 #include <QUrl>
 #include <QtCore>
 
+#include <utility>
+
 AboutDialog::AboutDialog(QString url, QWidget* parent)
-: QDialog(parent)
-, ui(new Ui::AboutDialog)
-, m_url(url) {
+: QDialog{ parent }
+, ui{ new Ui::AboutDialog }
+, m_url{ std::move(url) } {
   ui->setupUi(this);
   setFixedSize(width(), height());
 

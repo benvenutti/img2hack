@@ -15,5 +15,5 @@ public:
 
 private:
   Ui::AboutDialog* ui;
-  QString m_url;
+  const QString m_url;
 };

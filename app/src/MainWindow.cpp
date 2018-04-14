@@ -1,21 +1,26 @@
 #include "MainWindow.hpp"
 #include "ui_MainWindow.h"
 
-#include <QFileDialog>
-#include <iostream>
-
 #include "model/Hack.hpp"
 #include "model/ScreenMap.hpp"
 #include "model/Writer.hpp"
 
+#include <QFileDialog>
+
+#include <iostream>
+
 using namespace Magick;
 
 MainWindow::MainWindow(QWidget* parent)
-: QMainWindow(parent)
-, ui(new Ui::MainWindow)
-, m_path("")
-, m_aboutDlg("https://github.com/benvenutti/img2hack", this) {
+: QMainWindow{ parent }
+, ui{ new Ui::MainWindow }
+, m_path{ "" }
+, m_aboutDlg{ "https://github.com/benvenutti/img2hack", this } {
   ui->setupUi(this);
+  setFixedSize(width(), height());
+  statusBar()->hide();
+  enableButtons(false);
+  resetControls();
 
   connect(ui->btOpenImage, SIGNAL(clicked()), this, SLOT(openImage()));
   connect(ui->btCloseImage, SIGNAL(clicked()), this, SLOT(closeImage()));
@@ -31,11 +36,6 @@ MainWindow::MainWindow(QWidget* parent)
 
   connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
   connect(ui->actionAbout, &QAction::triggered, [this]() { m_aboutDlg.exec(); });
-
-  setFixedSize(width(), height());
-  statusBar()->hide();
-  enableButtons(false);
-  resetControls();
 }
 
 MainWindow::~MainWindow() {
