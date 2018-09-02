@@ -1,10 +1,13 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
+
+#include "AboutDialog.hpp"
+
+#include <Magick++.h>
 
 #include <QFileInfo>
 #include <QMainWindow>
-
-#include <Magick++.h>
+#include <QPixmap>
+#include <QString>
 
 namespace Ui {
 class MainWindow;
@@ -14,47 +17,42 @@ class MainWindow : public QMainWindow {
   Q_OBJECT
 
 public:
-  explicit MainWindow(QWidget* parent = 0);
+  explicit MainWindow(QWidget* parent = nullptr);
   ~MainWindow();
 
 private slots:
-  void on_btInvertImage_clicked();
-  void on_sliderThreshold_valueChanged(int value);
-  void on_btOpenImage_clicked();
-  void on_btExportToHACK_clicked();
-  void on_editThresholdValue_textChanged(const QString& arg1);
-
-  void on_actionAbout_triggered();
-  void on_actionOpen_triggered();
-  void on_actionExport_triggered();
-  void on_actionExit_triggered();
-
-  void on_btView_clicked();
-  void on_btCloseImage_clicked();
-  void on_btExportToImage_clicked();
+  void openImage();
+  void closeImage();
+  void invertImage();
+  void updateThresholdValue(const QString& value);
+  void updateThresholdSlider(int value);
+  void exportToHack();
+  void changeView();
+  void exportToImage();
 
 private:
   void processImage();
   void renderImage();
+  void render(Magick::Image& image);
   void log(QString message);
-  void logExportToHack(QString filaName, QString path, int numLines);
-  void logExportToImage(QString filaName, QString path);
+  void logExportToHack(QString filaName, QString m_path, int numLines);
+  void logExportToImage(QString filaName, QString m_path);
   void logOpenFile(QString fileName);
   void resetControls();
   void enableButtons(bool enable);
 
   Ui::MainWindow* ui;
 
-  Magick::Image image;
-  Magick::Blob blobOriginal;
-  Magick::Blob blobProcessed;
-  QPixmap pixmap;
-  QFileInfo inputFile;
-  QString path;
+  Magick::Image m_originalImage;
+  Magick::Image m_processedImage;
 
-  bool isOriginalView;
-  bool negate;
-  int threshold;
+  QFileInfo m_inputFile;
+  QPixmap m_pixmap;
+  QString m_path;
+
+  AboutDialog m_aboutDlg;
+
+  bool m_isOriginalView;
+  bool m_negate;
+  int m_threshold;
 };
-
-#endif // MAINWINDOW_H

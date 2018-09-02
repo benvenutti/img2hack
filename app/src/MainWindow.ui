@@ -14,7 +14,7 @@
    <string>img2Hack</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../images.qrc">
+   <iconset resource="images.qrc">
     <normaloff>:/icons/icons/emblem-photos.png</normaloff>:/icons/icons/emblem-photos.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -58,7 +58,7 @@
      <string>Export</string>
     </property>
     <property name="icon">
-     <iconset resource="../images.qrc">
+     <iconset resource="images.qrc">
       <normaloff>:/icons/icons/document-save.png</normaloff>:/icons/icons/document-save.png</iconset>
     </property>
    </widget>
@@ -188,7 +188,7 @@
      <string>Open</string>
     </property>
     <property name="icon">
-     <iconset resource="../images.qrc">
+     <iconset resource="images.qrc">
       <normaloff>:/icons/icons/document-open.png</normaloff>:/icons/icons/document-open.png</iconset>
     </property>
    </widget>
@@ -263,7 +263,7 @@ color: #888;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../images.qrc">
+      <iconset resource="images.qrc">
        <normaloff>:/icons/icons/edit-find.png</normaloff>:/icons/icons/edit-find.png</iconset>
      </property>
      <property name="flat">
@@ -305,7 +305,7 @@ color: #888;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../images.qrc">
+      <iconset resource="images.qrc">
        <normaloff>:/icons/icons/edit-delete.png</normaloff>:/icons/icons/edit-delete.png</iconset>
      </property>
      <property name="flat">
@@ -334,7 +334,7 @@ color: #888;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../images.qrc">
+      <iconset resource="images.qrc">
        <normaloff>:/icons/icons/insert-image.png</normaloff>:/icons/icons/insert-image.png</iconset>
      </property>
     </widget>
@@ -387,7 +387,7 @@ color: #888;</string>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAbout">
    <property name="icon">
-    <iconset resource="../images.qrc">
+    <iconset resource="images.qrc">
      <normaloff>:/icons/icons/help-about.png</normaloff>:/icons/icons/help-about.png</iconset>
    </property>
    <property name="text">
@@ -396,7 +396,7 @@ color: #888;</string>
   </action>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="../images.qrc">
+    <iconset resource="images.qrc">
      <normaloff>:/icons/icons/document-open.png</normaloff>:/icons/icons/document-open.png</iconset>
    </property>
    <property name="text">
@@ -408,7 +408,7 @@ color: #888;</string>
   </action>
   <action name="actionExport">
    <property name="icon">
-    <iconset resource="../images.qrc">
+    <iconset resource="images.qrc">
      <normaloff>:/icons/icons/document-save.png</normaloff>:/icons/icons/document-save.png</iconset>
    </property>
    <property name="text">
@@ -420,7 +420,7 @@ color: #888;</string>
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="../images.qrc">
+    <iconset resource="images.qrc">
      <normaloff>:/icons/icons/application-exit.png</normaloff>:/icons/icons/application-exit.png</iconset>
    </property>
    <property name="text">
@@ -433,7 +433,7 @@ color: #888;</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../images.qrc"/>
+  <include location="images.qrc"/>
  </resources>
  <connections/>
 </ui>

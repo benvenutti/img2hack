@@ -1,55 +1,56 @@
 #include "Writer.hpp"
 
-#include <bitset>
-#include <string>
-
 #include "Hack.hpp"
+#include "ScreenMap.hpp"
 
-using namespace std;
+#include <bitset>
 
-Writer::Writer(ofstream& output, map<int16_t, set<int>> words)
-: output(output)
-, words(words) {}
+namespace {
 
-Writer::~Writer() {}
+constexpr auto comment = "  // word: ";
+constexpr auto newl = "\n";
 
-int Writer::compile() {
-  int numOps = 0;
+} // anonymous namespace
 
-  for (auto w : words) {
+std::size_t Writer::compile(std::ofstream& out, const ScreenMap& screenMap) {
+  std::size_t numOps = 0;
 
-    bitset<16> bin(w.first);
-    string comment("\t// word: ");
+  for (auto w : screenMap) {
+    const auto word = w.first;
 
-    if (w.first == -1 || w.first == 1) {
-      output << "D=" << w.first << comment << bin << endl;
-      numOps++;
-    } else if (w.first == 0)
+    if (word == 0) {
       continue;
-    else if (w.first == -32768) {
-      output << "@" << (w.first * (-1) - 1) << comment << bin << endl;
-      output << "D=!A" << endl;
+    }
+
+    const std::bitset<16> bin(word);
+
+    if (word == -1 || word == 1) {
+      out << "D=" << word << comment << bin << newl;
+      numOps++;
+    } else if (word == -32768) { // TODO magic number?
+      out << "@" << (word * (-1) - 1) << comment << bin << newl;
+      out << "D=!A" << newl;
       numOps += 2;
-    } else if (w.first < 0) {
-      output << "@" << w.first * (-1) << comment << bin << endl;
-      output << "D=-A" << endl;
+    } else if (word < 0) {
+      out << "@" << word * (-1) << comment << bin << newl;
+      out << "D=-A" << newl;
       numOps += 2;
     } else {
-      output << "@" << w.first << comment << bin << endl;
-      output << "D=A" << endl;
+      out << "@" << word << comment << bin << newl;
+      out << "D=A" << newl;
       numOps += 2;
     }
 
-    for (auto adr : words.at(w.first)) {
-      output << "@" << (HACK::SCREEN_ADR + adr) << endl;
-      output << "M=D" << endl;
+    for (auto addr : w.second) {
+      out << "@" << (Hack::screen_addr + addr) << newl;
+      out << "M=D" << newl;
       numOps += 2;
     }
   }
 
-  output << "(END)" << endl; // does not count as op
-  output << "@END" << endl;
-  output << "0;JMP" << endl;
+  out << "(END)" << newl; // does not count as op
+  out << "@END" << newl;
+  out << "0;JMP" << newl;
   numOps += 2;
 
   return numOps;

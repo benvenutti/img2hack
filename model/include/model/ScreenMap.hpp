@@ -1,22 +1,25 @@
-#ifndef SCREENMAP_H
-#define SCREENMAP_H
+#pragma once
 
-#include <Magick++.h>
-#include <inttypes.h>
+#include <cstdint>
 #include <map>
 #include <set>
 
+namespace Magick {
+class Image;
+}
+
 class ScreenMap {
 public:
-  ScreenMap(Magick::Image img);
-  void add(int16_t word, int address);
-  std::map<int16_t, std::set<int>> getMap();
+  explicit ScreenMap(const Magick::Image& image);
+
+  auto begin() { return m_words.begin(); }
+  auto begin() const { return m_words.begin(); }
+  auto end() { return m_words.end(); }
+  auto end() const { return m_words.end(); }
 
 private:
-  void readImage();
+  void add(std::int16_t word, int address);
+  void read(const Magick::Image& image);
 
-  Magick::Image image;
-  std::map<int16_t, std::set<int>> words;
+  std::map<std::int16_t, std::set<int>> m_words;
 };
-
-#endif // SCREENMAP_H

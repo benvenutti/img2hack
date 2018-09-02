@@ -1,20 +1,12 @@
-#ifndef WRITER_H
-#define WRITER_H
+#pragma once
 
+#include <cstddef>
 #include <fstream>
-#include <inttypes.h>
-#include <map>
-#include <set>
 
-class Writer {
-public:
-  Writer(std::ofstream& output, std::map<int16_t, std::set<int>> words);
-  virtual ~Writer();
-  int compile();
+class ScreenMap;
 
-private:
-  std::ofstream& output;
-  std::map<int16_t, std::set<int>> words;
-};
+namespace Writer {
 
-#endif
+std::size_t compile(std::ofstream& out, const ScreenMap& screenMap);
+
+} // namespace Writer

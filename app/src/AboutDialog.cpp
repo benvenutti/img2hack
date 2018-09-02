@@ -5,22 +5,21 @@
 #include <QUrl>
 #include <QtCore>
 
+#include <utility>
+
 AboutDialog::AboutDialog(QString url, QWidget* parent)
-: QDialog(parent)
-, ui(new Ui::AboutDialog)
-, url(url) {
+: QDialog{ parent }
+, ui{ new Ui::AboutDialog }
+, m_url{ std::move(url) } {
   ui->setupUi(this);
-  setFixedSize(this->width(), this->height());
+  setFixedSize(width(), height());
+
+  connect(ui->btLink, &QPushButton::clicked,
+          [this] { QDesktopServices::openUrl(QUrl(m_url, QUrl::TolerantMode)); });
+
+  connect(ui->btOK, &QPushButton::clicked, [this] { AboutDialog::close(); });
 }
 
 AboutDialog::~AboutDialog() {
   delete ui;
-}
-
-void AboutDialog::on_btLink_clicked() {
-  QDesktopServices::openUrl(QUrl(url, QUrl::TolerantMode));
-}
-
-void AboutDialog::on_btOK_clicked() {
-  AboutDialog::close();
 }
