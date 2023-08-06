@@ -32,6 +32,8 @@ target_link_libraries(${PROJECT_NAME}
   PUBLIC
     ${ImageMagick_LIBRARIES})
 
+add_subdirectory(tests)
+
 ## install:
 
 install(TARGETS ${PROJECT_NAME}

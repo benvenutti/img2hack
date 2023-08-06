@@ -21,8 +21,17 @@ set(CMAKE_CXX_FLAGS_RELEASE -O2)
 
 ## 3rd party dependencies:
 
-find_package(ImageMagick COMPONENTS Magick++ REQUIRED)
-find_package(Qt5Widgets REQUIRED)
+Include(FetchContent)
+
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG        v3.0.1
+)
+
+FetchContent_MakeAvailable(Catch2)
+
+find_package(Qt6 6.2 COMPONENTS Quick Gui REQUIRED)
 
 ## compiler definitions:
 
@@ -38,5 +47,6 @@ endif()
 
 ## projects:
 
-add_subdirectory(app)
+# TODO: re-enable app
+# add_subdirectory(app)
 add_subdirectory(model)
