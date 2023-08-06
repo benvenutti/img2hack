@@ -1,11 +1,12 @@
-#include "ScreenMap.hpp"
+#include <model/ScreenMap.hpp>
 
-#include "Hack.hpp"
+#include <model/Hack.hpp>
 
-#include <Magick++.h>
+#include <QImage>
+#include <QFileInfo>
 
-ScreenMap::ScreenMap(const Magick::Image& image) {
-  read(image);
+ScreenMap::ScreenMap(const std::filesystem::path& imagePath) {
+  read(imagePath);
 }
 
 void ScreenMap::add(std::int16_t word, int address) {
@@ -16,7 +17,14 @@ void ScreenMap::add(std::int16_t word, int address) {
   }
 }
 
-void ScreenMap::read(const Magick::Image& image) {
+void ScreenMap::read(const std::filesystem::path& imagePath) {
+  const QFileInfo fileInfo(imagePath);
+  const QImage image(fileInfo.absoluteFilePath());
+
+  if (image.isNull()) {
+    return;
+  }
+
   int counter = 0;
   std::int16_t word = 0;
   std::uint16_t mask = 1;
@@ -24,8 +32,13 @@ void ScreenMap::read(const Magick::Image& image) {
 
   for (int y = 0; y < Hack::screen_height; ++y) {
     for (int x = 0; x < Hack::screen_width; ++x) {
-      if (Magick::ColorMono{ image.pixelColor(x, y) }.mono()) {
-        word |= mask;
+      if (image.valid(x, y)) {
+        const auto pixel = image.pixel(x, y);
+        constexpr auto white = QRgb(0xffffffff);
+
+        if (pixel != white) {
+          word |= mask;
+        }
       }
 
       mask <<= 1;

@@ -1,5 +1,9 @@
-cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
-project(img2hack VERSION 0.1.0 LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
+
+project(img2hack
+  VERSION 0.1.0
+  DESCRIPTION "Convert images into hack (Nand2Tetris) assembly code"
+  LANGUAGES CXX)
 
 ## cmake modules:
 
@@ -7,7 +11,7 @@ include(GNUInstallDirs)
 
 ## build settings:
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the build type")
@@ -17,8 +21,17 @@ set(CMAKE_CXX_FLAGS_RELEASE -O2)
 
 ## 3rd party dependencies:
 
-find_package(ImageMagick COMPONENTS Magick++ REQUIRED)
-find_package(Qt5Widgets REQUIRED)
+Include(FetchContent)
+
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG        v3.0.1
+)
+
+FetchContent_MakeAvailable(Catch2)
+
+find_package(Qt6 6.2 COMPONENTS Core Gui REQUIRED)
 
 ## compiler definitions:
 
@@ -34,5 +47,6 @@ endif()
 
 ## projects:
 
-add_subdirectory(app)
+# TODO: re-enable app
+# add_subdirectory(app)
 add_subdirectory(model)
