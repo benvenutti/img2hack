@@ -1,16 +1,13 @@
 #pragma once
 
+#include <filesystem>
 #include <cstdint>
 #include <map>
 #include <set>
 
-namespace Magick {
-class Image;
-}
-
 class ScreenMap {
 public:
-  explicit ScreenMap(const Magick::Image& image);
+  explicit ScreenMap(const std::filesystem::path& imagePath);
 
   auto begin() { return m_words.begin(); }
   auto begin() const { return m_words.begin(); }
@@ -19,7 +16,7 @@ public:
 
 private:
   void add(std::int16_t word, int address);
-  void read(const Magick::Image& image);
+  void read(const std::filesystem::path& imagePath);
 
   std::map<std::int16_t, std::set<int>> m_words;
 };

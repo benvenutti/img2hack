@@ -1,11 +1,9 @@
-#include "ScreenMap.hpp"
+#include <model/ScreenMap.hpp>
 
-#include "Hack.hpp"
+#include <model/Hack.hpp>
 
-#include <Magick++.h>
-
-ScreenMap::ScreenMap(const Magick::Image& image) {
-  read(image);
+ScreenMap::ScreenMap(const std::filesystem::path& imagePath) {
+  read(imagePath);
 }
 
 void ScreenMap::add(std::int16_t word, int address) {
@@ -16,7 +14,7 @@ void ScreenMap::add(std::int16_t word, int address) {
   }
 }
 
-void ScreenMap::read(const Magick::Image& image) {
+void ScreenMap::read(const std::filesystem::path& imagePath) {
   int counter = 0;
   std::int16_t word = 0;
   std::uint16_t mask = 1;
@@ -24,9 +22,9 @@ void ScreenMap::read(const Magick::Image& image) {
 
   for (int y = 0; y < Hack::screen_height; ++y) {
     for (int x = 0; x < Hack::screen_width; ++x) {
-      if (Magick::ColorMono{ image.pixelColor(x, y) }.mono()) {
-        word |= mask;
-      }
+      //if (Magick::ColorMono{ image.pixelColor(x, y) }.mono()) {
+      //  word |= mask;
+      //}
 
       mask <<= 1;
       counter++;
