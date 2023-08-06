@@ -8,6 +8,8 @@ add_library(core STATIC
   include/core/Writer.hpp
 )
 
+target_compile_features(core PUBLIC cxx_std_17)
+
 target_include_directories(core PUBLIC include)
 
 target_link_libraries(core PRIVATE Qt6::Core Qt6::Gui)
