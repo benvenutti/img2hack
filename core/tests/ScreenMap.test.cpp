@@ -1,4 +1,4 @@
-#include <model/ScreenMap.hpp>
+#include <core/ScreenMap.hpp>
 
 #include <catch2/catch_test_macros.hpp>
 
