@@ -1,5 +1,9 @@
-cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
-project(img2hack VERSION 0.1.0 LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
+
+project(img2hack
+  VERSION 0.1.0
+  DESCRIPTION "Convert images into hack (Nand2Tetris) assembly code"
+  LANGUAGES CXX)
 
 ## cmake modules:
 
