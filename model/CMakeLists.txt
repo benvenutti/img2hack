@@ -10,4 +10,6 @@ add_library(model STATIC
 
 target_include_directories(model PUBLIC include)
 
+target_link_libraries(model PRIVATE Qt6::Core Qt6::Gui)
+
 add_subdirectory(tests)

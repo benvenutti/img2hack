@@ -14,6 +14,8 @@ public:
   auto end() { return m_words.end(); }
   auto end() const { return m_words.end(); }
 
+  const auto& map() const { return m_words; }
+
 private:
   void add(std::int16_t word, int address);
   void read(const std::filesystem::path& imagePath);
