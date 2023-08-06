@@ -1,4 +1,4 @@
-#include <model/ScreenMap.hpp>
+#include <core/ScreenMap.hpp>
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -8,7 +8,7 @@ TEST_CASE("Dummy", "[dummy]")
 {
   const std::filesystem::path root(TESTS_FILES_DIR);
 
-  const std::filesystem::path path = root / "files" / "image2.png";
+  const std::filesystem::path path = root / "files" / "image1.png";
 
   ScreenMap screenMap(path);
 

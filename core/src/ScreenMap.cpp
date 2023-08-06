@@ -1,6 +1,6 @@
-#include <model/ScreenMap.hpp>
+#include <core/ScreenMap.hpp>
 
-#include <model/Hack.hpp>
+#include <core/Hack.hpp>
 
 #include <QImage>
 #include <QFileInfo>

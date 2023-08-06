@@ -1,7 +1,7 @@
-#include <model/Writer.hpp>
+#include <core/Writer.hpp>
 
-#include <model/Hack.hpp>
-#include <model/ScreenMap.hpp>
+#include <core/Hack.hpp>
+#include <core/ScreenMap.hpp>
 
 #include <bitset>
 
