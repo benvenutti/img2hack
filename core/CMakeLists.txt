@@ -1,10 +1,10 @@
 add_library(core STATIC
+  src/BitmapToAssembly.cpp
   src/ImageToBitmap.cpp
-  src/Writer.cpp
   include/core/Bitmap.h
+  include/core/BitmapToAssembly.h
   include/core/Hack.hpp
   include/core/ImageToBitmap.h
-  include/core/Writer.hpp
 )
 
 target_compile_features(core PUBLIC cxx_std_17)

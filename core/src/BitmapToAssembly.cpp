@@ -1,4 +1,4 @@
-#include <core/Writer.hpp>
+#include <core/BitmapToAssembly.h>
 
 #include <core/Hack.hpp>
 
@@ -12,7 +12,7 @@ constexpr auto newl    = "\n";
 
 } // namespace
 
-std::size_t Writer::compile( std::ofstream& out, const Bitmap& bitmap )
+std::size_t bitmapToAssembly( std::ofstream& out, const Bitmap& bitmap )
 {
     std::size_t numOps = 0;
 
