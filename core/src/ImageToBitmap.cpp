@@ -1,4 +1,4 @@
-#include <core/Bitmap.h>
+#include <core/ImageToBitmap.h>
 
 #include <core/Hack.hpp>
 

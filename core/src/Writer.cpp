@@ -10,7 +10,7 @@ namespace
 constexpr auto comment = "  // word: ";
 constexpr auto newl    = "\n";
 
-} // anonymous namespace
+} // namespace
 
 std::size_t Writer::compile( std::ofstream& out, const Bitmap& bitmap )
 {

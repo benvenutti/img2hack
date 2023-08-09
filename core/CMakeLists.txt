@@ -1,8 +1,9 @@
 add_library(core STATIC
-  src/Bitmap.cpp
+  src/ImageToBitmap.cpp
   src/Writer.cpp
-  include/core/Hack.hpp
   include/core/Bitmap.h
+  include/core/Hack.hpp
+  include/core/ImageToBitmap.h
   include/core/Writer.hpp
 )
 
