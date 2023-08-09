@@ -2,55 +2,67 @@
 
 #include <core/Hack.hpp>
 
-#include <QImage>
 #include <QFileInfo>
+#include <QImage>
 
-ScreenMap::ScreenMap(const std::filesystem::path& imagePath) {
-  read(imagePath);
+ScreenMap::ScreenMap( const std::filesystem::path& imagePath )
+{
+    read( imagePath );
 }
 
-void ScreenMap::add(std::int16_t word, int address) {
-  if (m_words.find(word) != m_words.end()) {
-    m_words.at(word).insert(address);
-  } else {
-    m_words.emplace(word, std::set<int>{ address });
-  }
-}
-
-void ScreenMap::read(const std::filesystem::path& imagePath) {
-  const QFileInfo fileInfo(imagePath);
-  const QImage image(fileInfo.absoluteFilePath());
-
-  if (image.isNull()) {
-    return;
-  }
-
-  int counter = 0;
-  std::int16_t word = 0;
-  std::uint16_t mask = 1;
-  int adr = 0;
-
-  for (int y = 0; y < Hack::screen_height; ++y) {
-    for (int x = 0; x < Hack::screen_width; ++x) {
-      if (image.valid(x, y)) {
-        const auto pixel = image.pixel(x, y);
-        constexpr auto white = QRgb(0xffffffff);
-
-        if (pixel != white) {
-          word |= mask;
-        }
-      }
-
-      mask <<= 1;
-      counter++;
-
-      if (counter > Hack::word_size - 1) {
-        add(word, adr);
-        counter = 0;
-        word = 0;
-        mask = 1;
-        adr++;
-      }
+void ScreenMap::add( std::int16_t word, int address )
+{
+    if ( m_words.find( word ) != m_words.end() )
+    {
+        m_words.at( word ).insert( address );
     }
-  }
+    else
+    {
+        m_words.emplace( word, std::set<int>{ address } );
+    }
+}
+
+void ScreenMap::read( const std::filesystem::path& imagePath )
+{
+    const QFileInfo fileInfo( imagePath );
+    const QImage    image( fileInfo.absoluteFilePath() );
+
+    if ( image.isNull() )
+    {
+        return;
+    }
+
+    int           counter = 0;
+    std::int16_t  word    = 0;
+    std::uint16_t mask    = 1;
+    int           adr     = 0;
+
+    for ( int y = 0; y < Hack::screen_height; ++y )
+    {
+        for ( int x = 0; x < Hack::screen_width; ++x )
+        {
+            if ( image.valid( x, y ) )
+            {
+                const auto     pixel = image.pixel( x, y );
+                constexpr auto white = QRgb( 0xffffffff );
+
+                if ( pixel != white )
+                {
+                    word |= mask;
+                }
+            }
+
+            mask <<= 1;
+            counter++;
+
+            if ( counter > Hack::word_size - 1 )
+            {
+                add( word, adr );
+                counter = 0;
+                word    = 0;
+                mask    = 1;
+                adr++;
+            }
+        }
+    }
 }
