@@ -4,13 +4,36 @@
 
 #include <filesystem>
 
-TEST_CASE( "Dummy", "[dummy]" )
+std::filesystem::path testFilesPath()
 {
-    const std::filesystem::path root( TESTS_FILES_DIR );
+    return std::filesystem::path( TESTS_FILES_DIR ) / "files";
+}
 
-    const std::filesystem::path path = root / "files" / "image1.png";
+TEST_CASE( "ImageToBitmap: file does not exist" )
+{
+    const auto result = imageToBitmap( std::filesystem::path( "invalid_file_name" ) );
 
-    const auto result = imageToBitmap( path );
+    REQUIRE( std::holds_alternative<Error>( result ) );
+
+    const auto error = std::get<Error>( result );
+
+    REQUIRE( error == Error::file_does_not_exit );
+}
+
+TEST_CASE( "ImageToBitmap: file exists but it is not an image" )
+{
+    const auto result = imageToBitmap( testFilesPath() / "text.txt" );
+
+    REQUIRE( std::holds_alternative<Error>( result ) );
+
+    const auto error = std::get<Error>( result );
+
+    REQUIRE( error == Error::file_is_not_an_image );
+}
+
+TEST_CASE( "ImageToBitmap: file does not exist _" )
+{
+    const auto result = imageToBitmap( testFilesPath() / "image1.png" );
 
     REQUIRE( std::holds_alternative<Bitmap>( result ) );
 
