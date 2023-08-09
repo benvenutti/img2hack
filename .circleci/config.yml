@@ -1,0 +1,28 @@
+version: 2.1
+
+jobs:
+  macos-build:
+    macos:
+      xcode: 15.0.0
+    environment:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            brew install cmake
+            brew install qt
+      - run:
+          name: Configure and build
+          command: |
+            mkdir build
+            cd build
+            cmake ..
+            cmake --build .
+            ctest -VV .
+
+workflows:
+  build-and-test:
+    jobs:
+      - macos-build

@@ -43,6 +43,8 @@ else()
     -Woverloaded-virtual -pedantic)
 endif()
 
+enable_testing(true)
+
 ## projects:
 
 # TODO: re-enable app

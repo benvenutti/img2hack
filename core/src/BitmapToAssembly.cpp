@@ -1,6 +1,6 @@
 #include <core/BitmapToAssembly.h>
 
-#include <core/Hack.hpp>
+#include <core/Hack.h>
 
 #include <bitset>
 
