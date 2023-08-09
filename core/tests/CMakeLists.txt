@@ -1,4 +1,7 @@
-add_executable(core_tests ScreenMap.test.cpp)
+add_executable(core_tests
+  BitmapToAssembly.test.cpp
+  ImageToBitmap.test.cpp
+)
 
 target_link_libraries(core_tests PRIVATE core Catch2::Catch2WithMain)
 

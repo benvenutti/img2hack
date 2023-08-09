@@ -1,9 +1,10 @@
 add_library(core STATIC
-  src/ScreenMap.cpp
-  src/Writer.cpp
-  include/core/Hack.hpp
-  include/core/ScreenMap.hpp
-  include/core/Writer.hpp
+  src/BitmapToAssembly.cpp
+  src/ImageToBitmap.cpp
+  include/core/Bitmap.h
+  include/core/BitmapToAssembly.h
+  include/core/Hack.h
+  include/core/ImageToBitmap.h
 )
 
 target_compile_features(core PUBLIC cxx_std_17)
