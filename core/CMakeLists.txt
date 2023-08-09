@@ -1,5 +1,3 @@
-## library:
-
 add_library(core STATIC
   src/ScreenMap.cpp
   src/Writer.cpp

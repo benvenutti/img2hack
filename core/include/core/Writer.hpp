@@ -5,8 +5,9 @@
 
 class ScreenMap;
 
-namespace Writer {
+namespace Writer
+{
 
-std::size_t compile(std::ofstream& out, const ScreenMap& screenMap);
+std::size_t compile( std::ofstream& out, const ScreenMap& screenMap );
 
 } // namespace Writer
