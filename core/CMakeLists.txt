@@ -1,8 +1,8 @@
 add_library(core STATIC
-  src/ScreenMap.cpp
+  src/Bitmap.cpp
   src/Writer.cpp
   include/core/Hack.hpp
-  include/core/ScreenMap.hpp
+  include/core/Bitmap.h
   include/core/Writer.hpp
 )
 

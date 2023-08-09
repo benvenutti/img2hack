@@ -1,37 +1,45 @@
-#include <core/ScreenMap.hpp>
+#include <core/Bitmap.h>
 
 #include <core/Hack.hpp>
 
 #include <QFileInfo>
 #include <QImage>
 
-ScreenMap::ScreenMap( const std::filesystem::path& imagePath )
+namespace
 {
-    read( imagePath );
-}
 
-void ScreenMap::add( std::int16_t word, int address )
+void addWord( Bitmap& bitmap, const std::int16_t word, const int address )
 {
-    if ( m_words.find( word ) != m_words.end() )
+    if ( bitmap.find( word ) != bitmap.end() )
     {
-        m_words.at( word ).insert( address );
+        bitmap.at( word ).insert( address );
     }
     else
     {
-        m_words.emplace( word, std::set<int>{ address } );
+        bitmap.emplace( word, std::set<int>{ address } );
     }
 }
 
-void ScreenMap::read( const std::filesystem::path& imagePath )
+} // namespace
+
+Result imageToBitmap( const std::filesystem::path& pathToImage )
 {
-    const QFileInfo fileInfo( imagePath );
+    std::error_code errorCode;
+
+    if ( !std::filesystem::exists( pathToImage, errorCode ) )
+    {
+        return Error::file_does_not_exit;
+    }
+
+    const QFileInfo fileInfo( pathToImage );
     const QImage    image( fileInfo.absoluteFilePath() );
 
     if ( image.isNull() )
     {
-        return;
+        return Error::file_is_not_an_image;
     }
 
+    Bitmap        bitmap;
     int           counter = 0;
     std::int16_t  word    = 0;
     std::uint16_t mask    = 1;
@@ -57,7 +65,7 @@ void ScreenMap::read( const std::filesystem::path& imagePath )
 
             if ( counter > Hack::word_size - 1 )
             {
-                add( word, adr );
+                addWord( bitmap, word, adr );
                 counter = 0;
                 word    = 0;
                 mask    = 1;
@@ -65,4 +73,6 @@ void ScreenMap::read( const std::filesystem::path& imagePath )
             }
         }
     }
+
+    return std::move( bitmap );
 }

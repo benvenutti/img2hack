@@ -1,7 +1,6 @@
 #include <core/Writer.hpp>
 
 #include <core/Hack.hpp>
-#include <core/ScreenMap.hpp>
 
 #include <bitset>
 
@@ -13,11 +12,11 @@ constexpr auto newl    = "\n";
 
 } // anonymous namespace
 
-std::size_t Writer::compile( std::ofstream& out, const ScreenMap& screenMap )
+std::size_t Writer::compile( std::ofstream& out, const Bitmap& bitmap )
 {
     std::size_t numOps = 0;
 
-    for ( const auto& w : screenMap )
+    for ( const auto& w : bitmap )
     {
         const auto word = w.first;
 
