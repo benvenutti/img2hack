@@ -3,7 +3,7 @@ add_library(core STATIC
   src/ImageToBitmap.cpp
   include/core/Bitmap.h
   include/core/BitmapToAssembly.h
-  include/core/Hack.hpp
+  include/core/Hack.h
   include/core/ImageToBitmap.h
 )
 
