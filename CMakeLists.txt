@@ -1,23 +1,14 @@
 cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
 
+# project:
+
 project(img2hack
   VERSION 0.1.0
   DESCRIPTION "Convert images into hack (Nand2Tetris) assembly code"
-  LANGUAGES CXX)
+  LANGUAGES CXX
+)
 
-## cmake modules:
-
-include(GNUInstallDirs)
-
-## build settings:
-
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the build type")
-endif()
-
-set(CMAKE_CXX_FLAGS_RELEASE -O2)
-
-## 3rd party dependencies:
+# dependencies:
 
 Include(FetchContent)
 
@@ -31,7 +22,7 @@ FetchContent_MakeAvailable(Catch2)
 
 find_package(Qt6 6.2 COMPONENTS Core Gui REQUIRED)
 
-## compiler definitions:
+# compiler definitions:
 
 if(MSVC)
   add_compile_options(/W4 /w14545 /w34242 /w34254 /w34287 /w44263 /w44265
@@ -43,10 +34,9 @@ else()
     -Woverloaded-virtual -pedantic)
 endif()
 
+# subdirectories:
+
 enable_testing(true)
 
-## projects:
-
-# TODO: re-enable app
-# add_subdirectory(app)
+add_subdirectory(app)
 add_subdirectory(core)
