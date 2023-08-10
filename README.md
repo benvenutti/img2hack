@@ -1,4 +1,4 @@
-# img2hack [![Build Status](https://travis-ci.org/benvenutti/img2hack.svg?branch=master)](https://travis-ci.org/benvenutti/img2hack) [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) [![Github Issues](https://img.shields.io/github/issues/benvenutti/img2hack.svg)](http://github.com/benvenutti/img2hack/issues) [![Github Releases](https://img.shields.io/github/release/benvenutti/img2hack.svg)](https://github.com/benvenutti/img2hack/releases)
+# img2hack [![CircleCI](https://circleci.com/gh/benvenutti/img2hack.svg?style=svg)](https://circleci.com/gh/benvenutti/img2hack)
 
 This project is a small desktop program that converts image files to Hack assembly files. The assembly file is to be run on a Hack simulator/computer, where the code will output the original image to its screen. For more information on the Hack computer, take a look at [nand2tetris](http://nand2tetris.org/).
 

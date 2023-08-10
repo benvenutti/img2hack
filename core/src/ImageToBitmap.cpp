@@ -1,6 +1,6 @@
 #include <core/ImageToBitmap.h>
 
-#include <core/Hack.hpp>
+#include <core/Hack.h>
 
 #include <QFileInfo>
 #include <QImage>
