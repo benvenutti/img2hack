@@ -14,11 +14,19 @@ jobs:
             brew install cmake
             brew install qt
       - run:
-          name: Configure and build
+          name: Configure and build "Release"
           command: |
-            mkdir build
-            cd build
-            cmake ..
+            mkdir build_release
+            cd build_release
+            cmake -D CMAKE_BUILD_TYPE=Release ..
+            cmake --build .
+            ctest -VV .
+      - run:
+          name: Configure and build "Debug"
+          command: |
+            mkdir build_debug
+            cd build_debug
+            cmake - DCMAKE_BUILD_TYPE=Debug ..
             cmake --build .
             ctest -VV .
 
