@@ -18,9 +18,9 @@ set(ui_files
 set(qrc_files
   src/images.qrc)
 
-qt5_wrap_cpp(header_files_moc ${header_files})
-qt5_wrap_ui(ui_files_moc ${ui_files})
-qt5_add_resources(resources_files ${qrc_files})
+qt6_wrap_cpp(header_files_moc ${header_files})
+qt6_wrap_ui(ui_files_moc ${ui_files})
+qt6_add_resources(resources_files ${qrc_files})
 
 ## executable:
 
@@ -36,13 +36,8 @@ target_include_directories(${PROJECT_NAME}
     ${PROJECT_BINARY_DIR}
     ${PROJECT_SOURCE_DIR})
 
-target_include_directories(${PROJECT_NAME}
-  SYSTEM PUBLIC
-    ${ImageMagick_INCLUDE_DIRS})
-
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
-    ${ImageMagick_LIBRARIES}
-    Qt5::Widgets
+    Qt6::Widgets
   PRIVATE
-    model)
+    core)

@@ -20,7 +20,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Catch2)
 
-find_package(Qt6 6.2 COMPONENTS Core Gui REQUIRED)
+find_package(Qt6 6.2 COMPONENTS Core Gui Widgets REQUIRED)
 
 # compiler definitions:
 
