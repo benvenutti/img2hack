@@ -1,15 +1,16 @@
 #include "MainWindow.hpp"
 #include "ui_MainWindow.h"
 
-#include "model/Hack.hpp"
-#include "model/ScreenMap.hpp"
-#include "model/Writer.hpp"
+#include <core/Bitmap.h>
+#include <core/BitmapToAssembly.h>
+#include <core/Hack.h>
+#include <core/ImageToBitmap.h>
 
 #include <QFileDialog>
+#include <QStandardPaths>
+#include <QTemporaryFile>
 
 #include <iostream>
-
-using namespace Magick;
 
 MainWindow::MainWindow( QWidget* parent )
 : QMainWindow{ parent }
@@ -61,15 +62,15 @@ void MainWindow::log( QString message )
 
 void MainWindow::logOpenFile( QString fileName )
 {
-    QFileInfo info( fileName );
-    Image     img( info.absoluteFilePath().toStdString() );
+    const QFileInfo info( fileName );
+    const QImage    img( info.absoluteFilePath() );
 
     log( "> File opened: " + info.fileName() );
     log( "  At: " + info.absoluteDir().absolutePath() );
 
-    int     w = img.columns();
-    int     h = img.rows();
-    QString s( "  w: " + QString::number( w ) + " h:" + QString::number( h ) );
+    const int w = img.width();
+    const int h = img.height();
+    QString   s( "  w: " + QString::number( w ) + " h:" + QString::number( h ) );
 
     if ( w > Hack::screen_width || h > Hack::screen_height )
     {
@@ -103,33 +104,30 @@ void MainWindow::renderImage()
     else
     {
         processImage();
-        Magick::Image copy{ m_processedImage };
+        auto copy = m_processedImage;
         render( copy );
     }
 }
 
-void MainWindow::render( Magick::Image& image )
+void MainWindow::render( const QImage& image )
 {
-    constexpr auto format = "XPM";
-
-    Magick::Blob blob;
-    image.magick( format );
-    image.write( &blob, format );
-
-    m_pixmap.loadFromData( static_cast<const char*>( blob.data() ), format );
     ui->label->update();
-    ui->label->setPixmap( m_pixmap );
+    ui->label->setPixmap( QPixmap::fromImage( image ) );
 }
 
 void MainWindow::processImage()
 {
-    auto copy = m_originalImage;
-    copy.threshold( ( m_threshold / 100.0 ) * QuantumRange );
+    m_processedImage = m_originalImage;
+    m_processedImage.fill( 255 );
 
-    if ( m_negate )
-        copy.negate();
-
-    m_processedImage = copy;
+    for ( int x = 0; x < m_processedImage.width(); x++ )
+    {
+        for ( int y = 0; y < m_processedImage.height(); y++ )
+        {
+            m_processedImage.setPixel(
+                x, y, qGray( m_originalImage.pixel( x, y ) ) > m_threshold ? qRgb( 255, 255, 255 ) : qRgb( 0, 0, 0 ) );
+        }
+    }
 }
 
 void MainWindow::enableButtons( bool enable )
@@ -182,12 +180,9 @@ void MainWindow::openImage()
     if ( fileName.isEmpty() )
         return;
 
-    Geometry geometry( Hack::screen_width, Hack::screen_height );
-    m_originalImage.size( geometry );
-
     try
     {
-        m_originalImage.read( fileName.toStdString() );
+        m_originalImage.load( fileName );
         m_processedImage = m_originalImage;
     }
     catch ( ... )
@@ -210,16 +205,7 @@ void MainWindow::openImage()
 
 void MainWindow::updateThresholdValue( const QString& value )
 {
-    QRegExp re( "\\d*" );
-
-    if ( !re.exactMatch( value ) )
-    {
-        QString val = value.left( value.length() - 1 );
-        ui->editThresholdValue->setText( val );
-        return;
-    }
-
-    int v = value.toInt();
+    const int v = value.toInt();
 
     if ( v > 100 )
     {
@@ -263,17 +249,32 @@ void MainWindow::changeView()
 
 void MainWindow::exportToHack()
 {
-    ScreenMap screenMap{ m_processedImage };
+    const auto tempFilePath =
+        std::filesystem::path( QStandardPaths::writableLocation( QStandardPaths::TempLocation ).toStdString() )
+        / m_inputFile.baseName().toStdString();
 
-    QString       path( m_inputFile.absoluteDir().absolutePath() + "/" + m_inputFile.baseName() + ".asm" );
-    std::ofstream outputFile( path.toStdString() );
+    const QFileInfo fileInfo( tempFilePath );
 
-    const auto numLines = Writer::compile( outputFile, screenMap );
+    m_processedImage.save( fileInfo.absoluteFilePath() );
 
-    logExportToHack( m_inputFile.baseName() + ".asm", m_inputFile.absoluteDir().absolutePath(), numLines );
+    const auto result = imageToBitmap( tempFilePath );
 
-    if ( outputFile.is_open() )
-        outputFile.close();
+    if ( std::holds_alternative<Bitmap>( result ) )
+    {
+        const auto& bitmap = std::get<Bitmap>( result );
+
+        const QString path( m_inputFile.absoluteDir().absolutePath() + "/" + m_inputFile.baseName() + ".asm" );
+        std::ofstream outputFile( path.toStdString() );
+
+        const auto numLines = bitmapToAssembly( outputFile, bitmap );
+
+        logExportToHack( m_inputFile.baseName() + ".asm", m_inputFile.absoluteDir().absolutePath(), numLines );
+
+        if ( outputFile.is_open() )
+        {
+            outputFile.close();
+        }
+    }
 }
 
 void MainWindow::exportToImage()
@@ -281,9 +282,11 @@ void MainWindow::exportToImage()
     QString fileName = QFileDialog::getSaveFileName( this, tr( "Save to Image" ), "", tr( "Files (*.*)" ) );
 
     if ( fileName.isEmpty() )
+    {
         return;
+    }
 
-    m_processedImage.write( fileName.toStdString() );
+    m_processedImage.save( fileName );
 
     QFileInfo info( fileName );
     logExportToImage( info.baseName() + ".asm", info.absoluteDir().absolutePath() );

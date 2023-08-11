@@ -1,18 +1,13 @@
 #include "MainWindow.hpp"
 
 #include <QApplication>
-#include <QDesktopWidget>
-#include <QStyle>
 
 int main( int argc, char* argv[] )
 {
-    QApplication a( argc, argv );
-    MainWindow   w;
+    QApplication app( argc, argv );
 
-    w.setGeometry(
-        QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, w.size(), qApp->desktop()->availableGeometry() ) );
+    MainWindow mainWindow;
+    mainWindow.show();
 
-    w.show();
-
-    return a.exec();
+    return app.exec();
 }

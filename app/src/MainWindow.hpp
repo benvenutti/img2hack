@@ -2,9 +2,8 @@
 
 #include "AboutDialog.hpp"
 
-#include <Magick++.h>
-
 #include <QFileInfo>
+#include <QImage>
 #include <QMainWindow>
 #include <QPixmap>
 #include <QString>
@@ -35,7 +34,7 @@ private slots:
 private:
     void processImage();
     void renderImage();
-    void render( Magick::Image& image );
+    void render( const QImage& image );
     void log( QString message );
     void logExportToHack( QString filaName, QString m_path, int numLines );
     void logExportToImage( QString filaName, QString m_path );
@@ -45,11 +44,11 @@ private:
 
     Ui::MainWindow* ui;
 
-    Magick::Image m_originalImage;
-    Magick::Image m_processedImage;
+    QImage m_originalImage;
+    QImage m_processedImage;
 
     QFileInfo m_inputFile;
-    QPixmap   m_pixmap;
+    QPixmap   m_pixmap; // TODO: remove?
     QString   m_path;
 
     AboutDialog m_aboutDlg;
