@@ -2,18 +2,20 @@
 
 #include <QDialog>
 
-namespace Ui {
+namespace Ui
+{
 class AboutDialog;
 }
 
-class AboutDialog : public QDialog {
-  Q_OBJECT
+class AboutDialog : public QDialog
+{
+    Q_OBJECT
 
 public:
-  explicit AboutDialog(QString url, QWidget* parent = nullptr);
-  ~AboutDialog();
+    explicit AboutDialog( QString url, QWidget* parent = nullptr );
+    ~AboutDialog();
 
 private:
-  Ui::AboutDialog* ui;
-  const QString m_url;
+    Ui::AboutDialog* ui;
+    const QString    m_url;
 };
