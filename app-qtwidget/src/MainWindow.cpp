@@ -1,4 +1,4 @@
-#include "MainWindow.hpp"
+#include "MainWindow.h"
 #include "ui_MainWindow.h"
 
 #include <core/Bitmap.h>

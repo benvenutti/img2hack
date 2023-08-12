@@ -6,10 +6,10 @@ qt_add_resources(RESOURCES src/images.qrc)
 
 qt_add_executable(img2hack-gui-qtwidget
   src/AboutDialog.cpp
-  src/AboutDialog.hpp
+  src/AboutDialog.h
   src/AboutDialog.ui
   src/MainWindow.cpp
-  src/MainWindow.hpp
+  src/MainWindow.h
   src/MainWindow.ui
   src/main.cpp
   ${RESOURCES}
