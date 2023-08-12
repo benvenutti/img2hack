@@ -8,6 +8,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04, macos-13, windows-2022]
+        build_type: [Debug, Release]
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -29,6 +30,6 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release ..
-          cmake --build . --config Release
-          ctest -C Release -VV .
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
+          cmake --build . --config ${{ matrix.build_type }}
+          ctest -C ${{ matrix.build_type }} -VV .
