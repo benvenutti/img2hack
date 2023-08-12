@@ -1,4 +1,4 @@
-#include "MainWindow.hpp"
+#include "MainWindow.h"
 #include "ui_MainWindow.h"
 
 #include <core/Bitmap.h>
@@ -233,13 +233,13 @@ void MainWindow::changeView()
 
     if ( m_isOriginalView )
     {
-        QIcon icon( ":/icons/icons/edit-find.png" );
+        QIcon icon( ":/icons/edit-find.png" );
         ui->btView->setIcon( icon );
         ui->txtView->setText( "Original" );
     }
     else
     {
-        QIcon icon( ":/icons/icons/edit-find-replace.png" );
+        QIcon icon( ":/icons/edit-find-replace.png" );
         ui->btView->setIcon( icon );
         ui->txtView->setText( "Preview" );
     }

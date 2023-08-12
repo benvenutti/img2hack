@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AboutDialog.hpp"
+#include "AboutDialog.h"
 
 #include <QFileInfo>
 #include <QImage>

@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="images.qrc">
-    <normaloff>:/icons/icons/emblem-photos.png</normaloff>:/icons/icons/emblem-photos.png</iconset>
+    <normaloff>:/icons/emblem-photos.png</normaloff>:/icons/emblem-photos.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTextEdit" name="console">
@@ -59,7 +59,7 @@
     </property>
     <property name="icon">
      <iconset resource="images.qrc">
-      <normaloff>:/icons/icons/document-save.png</normaloff>:/icons/icons/document-save.png</iconset>
+      <normaloff>:/icons/document-save.png</normaloff>:/icons/document-save.png</iconset>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBox">
@@ -189,7 +189,7 @@
     </property>
     <property name="icon">
      <iconset resource="images.qrc">
-      <normaloff>:/icons/icons/document-open.png</normaloff>:/icons/icons/document-open.png</iconset>
+      <normaloff>:/icons/document-open.png</normaloff>:/icons/document-open.png</iconset>
     </property>
    </widget>
    <widget class="QFrame" name="frame">
@@ -222,7 +222,6 @@
      <property name="font">
       <font>
        <pointsize>16</pointsize>
-       <weight>75</weight>
        <italic>false</italic>
        <bold>true</bold>
       </font>
@@ -264,7 +263,7 @@ color: #888;</string>
      </property>
      <property name="icon">
       <iconset resource="images.qrc">
-       <normaloff>:/icons/icons/edit-find.png</normaloff>:/icons/icons/edit-find.png</iconset>
+       <normaloff>:/icons/edit-find.png</normaloff>:/icons/edit-find.png</iconset>
      </property>
      <property name="flat">
       <bool>true</bool>
@@ -306,7 +305,7 @@ color: #888;</string>
      </property>
      <property name="icon">
       <iconset resource="images.qrc">
-       <normaloff>:/icons/icons/edit-delete.png</normaloff>:/icons/icons/edit-delete.png</iconset>
+       <normaloff>:/icons/edit-delete.png</normaloff>:/icons/edit-delete.png</iconset>
      </property>
      <property name="flat">
       <bool>true</bool>
@@ -335,7 +334,7 @@ color: #888;</string>
      </property>
      <property name="icon">
       <iconset resource="images.qrc">
-       <normaloff>:/icons/icons/insert-image.png</normaloff>:/icons/icons/insert-image.png</iconset>
+       <normaloff>:/icons/insert-image.png</normaloff>:/icons/insert-image.png</iconset>
      </property>
     </widget>
    </widget>
@@ -346,7 +345,7 @@ color: #888;</string>
      <x>0</x>
      <y>0</y>
      <width>687</width>
-     <height>25</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuImg2hacks">
@@ -388,7 +387,7 @@ color: #888;</string>
   <action name="actionAbout">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/icons/icons/help-about.png</normaloff>:/icons/icons/help-about.png</iconset>
+     <normaloff>:/icons/help-about.png</normaloff>:/icons/help-about.png</iconset>
    </property>
    <property name="text">
     <string>About...</string>
@@ -397,7 +396,7 @@ color: #888;</string>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/icons/icons/document-open.png</normaloff>:/icons/icons/document-open.png</iconset>
+     <normaloff>:/icons/document-open.png</normaloff>:/icons/document-open.png</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -409,7 +408,7 @@ color: #888;</string>
   <action name="actionExport">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/icons/icons/document-save.png</normaloff>:/icons/icons/document-save.png</iconset>
+     <normaloff>:/icons/document-save.png</normaloff>:/icons/document-save.png</iconset>
    </property>
    <property name="text">
     <string>Export</string>
@@ -421,7 +420,7 @@ color: #888;</string>
   <action name="actionExit">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/icons/icons/application-exit.png</normaloff>:/icons/icons/application-exit.png</iconset>
+     <normaloff>:/icons/application-exit.png</normaloff>:/icons/application-exit.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
