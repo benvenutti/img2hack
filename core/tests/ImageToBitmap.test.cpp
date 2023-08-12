@@ -31,26 +31,6 @@ TEST_CASE( "ImageToBitmap: file exists but it is not an image" )
     REQUIRE( error == Error::file_is_not_an_image );
 }
 
-struct Visitor
-{
-    void operator()( const Error& error )
-    {
-        if ( error == Error::file_is_not_an_image )
-        {
-            INFO( "file_is_not_an_image " );
-        }
-        else if ( error == Error::file_does_not_exit )
-        {
-            INFO( "file_does_not_exit " );
-        }
-    }
-
-    void operator()( const Bitmap& )
-    {
-        INFO( "it is a bitmap " );
-    }
-};
-
 TEST_CASE( "ImageToBitmap: valid image" )
 {
     const auto result = imageToBitmap( testFilesPath() / "image1.png" );
