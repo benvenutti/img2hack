@@ -1,43 +1,22 @@
-project(img2hack-gui LANGUAGES CXX)
+qt_standard_project_setup()
 
-## files:
-
-set(source_files
+qt_add_executable(img2hack-gui-qtwidget
   src/AboutDialog.cpp
-  src/MainWindow.cpp
-  src/main.cpp)
-
-set(header_files
   src/AboutDialog.hpp
-  src/MainWindow.hpp)
-
-set(ui_files
   src/AboutDialog.ui
-  src/MainWindow.ui)
+  src/MainWindow.cpp
+  src/MainWindow.hpp
+  src/MainWindow.ui
+  src/images.qrc
+  src/main.cpp
+)
 
-set(qrc_files
-  src/images.qrc)
+target_link_libraries(img2hack-gui-qtwidget
+  PUBLIC Qt6::Widgets
+  PRIVATE core
+)
 
-qt6_wrap_cpp(header_files_moc ${header_files})
-qt6_wrap_ui(ui_files_moc ${ui_files})
-qt6_add_resources(resources_files ${qrc_files})
-
-## executable:
-
-add_executable(${PROJECT_NAME}
-  ${source_files}
-  ${header_files}
-  ${header_files_moc}
-  ${ui_files_moc}
-  ${resources_files})
-
-target_include_directories(${PROJECT_NAME}
-  PRIVATE
-    ${PROJECT_BINARY_DIR}
-    ${PROJECT_SOURCE_DIR})
-
-target_link_libraries(${PROJECT_NAME}
-  PUBLIC
-    Qt6::Widgets
-  PRIVATE
-    core)
+# Prevent the creation of a console window on Windows
+set_target_properties(img2hack-gui-qtwidget PROPERTIES
+  WIN32_EXECUTABLE ON
+)
