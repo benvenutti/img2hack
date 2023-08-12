@@ -1,5 +1,9 @@
 qt_standard_project_setup()
 
+set(RESOURCES "")
+
+qt_add_resources(RESOURCES src/images.qrc)
+
 qt_add_executable(img2hack-gui-qtwidget
   src/AboutDialog.cpp
   src/AboutDialog.hpp
@@ -7,8 +11,8 @@ qt_add_executable(img2hack-gui-qtwidget
   src/MainWindow.cpp
   src/MainWindow.hpp
   src/MainWindow.ui
-  src/images.qrc
   src/main.cpp
+  ${RESOURCES}
 )
 
 target_link_libraries(img2hack-gui-qtwidget
