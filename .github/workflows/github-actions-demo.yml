@@ -4,8 +4,12 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 
 jobs:
-  Ubuntu:
-    runs-on: ubuntu-22.04
+  example_matrix:
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, macos-13]
+
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repo and download lfs dependencies
         uses: actions/checkout@v3
