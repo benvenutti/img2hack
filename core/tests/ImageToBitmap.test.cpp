@@ -31,7 +31,7 @@ TEST_CASE( "ImageToBitmap: file exists but it is not an image" )
     REQUIRE( error == Error::file_is_not_an_image );
 }
 
-TEST_CASE( "ImageToBitmap: file does not exist _" )
+TEST_CASE( "ImageToBitmap: valid image" )
 {
     const auto result = imageToBitmap( testFilesPath() / "image1.png" );
 

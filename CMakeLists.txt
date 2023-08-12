@@ -36,7 +36,7 @@ endif()
 
 # subdirectories:
 
-enable_testing(true)
+enable_testing()
 
 add_subdirectory(app-qtwidget)
 add_subdirectory(core)
