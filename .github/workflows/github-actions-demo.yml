@@ -19,9 +19,11 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - run: cmake --version
-      - name: Install dependencies
-        run: |
-          sudo apt install -y qt6-base-dev
+      - id: Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.5.*'
+          target: 'desktop'
       - name: Configure and Build
         run: |
           mkdir build
