@@ -1,4 +1,4 @@
-# img2hack [![CircleCI](https://circleci.com/gh/benvenutti/img2hack.svg?style=svg)](https://circleci.com/gh/benvenutti/img2hack)
+# img2hack ![example workflow](https://github.com/benvenutti/img2hack/actions/workflows/github-actions.yml/badge.svg)
 
 This project is a small desktop program that converts image files to Hack assembly files. The assembly file is to be run on a Hack simulator/computer, where the code will output the original image to its screen. For more information on the Hack computer, take a look at [nand2tetris](http://nand2tetris.org/).
 
