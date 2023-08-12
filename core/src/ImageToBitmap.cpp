@@ -74,5 +74,5 @@ Result imageToBitmap( const std::filesystem::path& pathToImage )
         }
     }
 
-    return std::move( bitmap );
+    return bitmap;
 }
