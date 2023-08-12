@@ -20,7 +20,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Catch2)
 
-find_package(Qt6 6.2 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Qt6 6.2 COMPONENTS Core Gui Quick Widgets REQUIRED)
 
 # compiler definitions:
 
@@ -38,5 +38,6 @@ endif()
 
 enable_testing()
 
+add_subdirectory(app-qtquick)
 add_subdirectory(app-qtwidget)
 add_subdirectory(core)
