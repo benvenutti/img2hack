@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
 # project:
 
 project(img2hack
-  VERSION 0.1.0
+  VERSION     0.1.0
   DESCRIPTION "Convert images into hack (Nand2Tetris) assembly code"
-  LANGUAGES CXX
+  LANGUAGES   CXX
 )
 
 # dependencies:
@@ -20,7 +20,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Catch2)
 
-find_package(Qt6 6.2 COMPONENTS Core Gui Quick Widgets REQUIRED)
+find_package(Qt6 6.2 COMPONENTS Core Gui Quick Widgets Qml REQUIRED)
 
 # compiler definitions:
 
