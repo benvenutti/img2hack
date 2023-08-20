@@ -11,6 +11,7 @@ class BinaryImage : public QQuickPaintedItem
     Q_OBJECT
     Q_PROPERTY( QUrl imageUrl READ imageUrl WRITE imageUrl NOTIFY imageUrlChanged )
     Q_PROPERTY( int threshold READ threshold WRITE threshold NOTIFY thresholdChanged )
+    Q_PROPERTY( bool invert READ invert WRITE invert NOTIFY invertChanged )
     QML_ELEMENT
 
 public:
@@ -26,15 +27,21 @@ public:
 
     void threshold( float value );
 
+    bool invert() const;
+
+    void invert( bool value );
+
 signals:
     void imageUrlChanged();
     void thresholdChanged();
+    void invertChanged();
 
 private:
     void processImage();
 
     QUrl   m_imageUrl;
     float  m_threshold;
+    bool   m_invert;
     QImage m_imageOriginal;
     QImage m_imageProcessed;
 };

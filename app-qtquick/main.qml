@@ -28,7 +28,8 @@ ApplicationWindow {
             enabled: originalImage.status == Image.Ready
             text: qsTr("Clear image")
             onClicked: {
-                originalImage.source = ""
+                originalImage.source = "";
+                binaryImage.invert = false;
                 thresholdSlider.reset();
             }
         }
@@ -56,14 +57,19 @@ ApplicationWindow {
             }
         }
 
+        CheckBox {
+            enabled: originalImage.status == Image.Ready
+            text: qsTr("Invert")
+            checkState: binaryImage.invert ? Qt.Checked : Qt.Unchecked
+            onClicked: binaryImage.invert = !binaryImage.invert;
+        }
+
         Image {
             id: originalImage
-            fillMode: Image.Stretch
         }
 
         BinaryImage {
-            width: 300
-            height: 300
+            id: binaryImage
             imageUrl: originalImage.source
             threshold: thresholdSlider.value
         }
