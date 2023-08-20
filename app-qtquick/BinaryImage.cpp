@@ -29,10 +29,13 @@ void BinaryImage::imageUrl( const QUrl& url )
         m_imageOriginal.load( url.path() );
         m_imageProcessed = QImage( m_imageOriginal.size(), m_imageOriginal.format() );
 
-        emit imageUrlChanged();
+        setWidth( m_imageProcessed.width() );
+        setHeight( m_imageProcessed.height() );
 
         processImage();
         update();
+
+        emit imageUrlChanged();
     }
 }
 
