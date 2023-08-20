@@ -6,7 +6,7 @@
 #include <QUrl>
 #include <QtQml>
 
-class DrawingCanvas : public QQuickPaintedItem
+class BinaryImage : public QQuickPaintedItem
 {
     Q_OBJECT
     Q_PROPERTY( QUrl imageUrl READ imageUrl WRITE imageUrl NOTIFY imageUrlChanged )
@@ -14,7 +14,7 @@ class DrawingCanvas : public QQuickPaintedItem
     QML_ELEMENT
 
 public:
-    explicit DrawingCanvas( QQuickItem* parent = nullptr );
+    explicit BinaryImage( QQuickItem* parent = nullptr );
 
     void paint( QPainter* painter ) override;
 
@@ -22,9 +22,9 @@ public:
 
     void imageUrl( const QUrl& url );
 
-    int threshold() const;
+    float threshold() const;
 
-    void threshold( int value );
+    void threshold( float value );
 
 signals:
     void imageUrlChanged();
@@ -34,7 +34,7 @@ private:
     void processImage();
 
     QUrl   m_imageUrl;
-    int    m_threshold;
+    float  m_threshold;
     QImage m_imageOriginal;
     QImage m_imageProcessed;
 };

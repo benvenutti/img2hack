@@ -17,6 +17,6 @@ qt_add_qml_module(img2hack-gui-qtquick
   QML_FILES
     main.qml
   SOURCES
-    DrawingCanvas.cpp
-    DrawingCanvas.h
+    BinaryImage.cpp
+    BinaryImage.h
 )

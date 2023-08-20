@@ -14,7 +14,7 @@ ApplicationWindow {
 
     header: ToolBar {
         Button {
-            text: qsTr("Choose Image...")
+            text: qsTr("Load Image...")
             onClicked: fileDialog.open()
         }
     }
@@ -27,7 +27,10 @@ ApplicationWindow {
         Button {
             enabled: originalImage.status == Image.Ready
             text: qsTr("Clear image")
-            onClicked: originalImage.source = ""
+            onClicked: {
+                originalImage.source = ""
+                thresholdSlider.reset();
+            }
         }
 
         Slider {
@@ -35,10 +38,12 @@ ApplicationWindow {
             from: 0.0
             value: 50.0
             to: 100.0
-            stepSize: 1.0
-            snapMode: Slider.SnapAlways
             enabled: originalImage.status == Image.Ready
             width: 300
+
+            function reset() {
+                value = 50.0
+            }
         }
 
         Image {
@@ -48,8 +53,7 @@ ApplicationWindow {
             fillMode: Image.Stretch
         }
 
-        DrawingCanvas {
-            id: canvas
+        BinaryImage {
             width: 300
             height: 300
             imageUrl: originalImage.source
