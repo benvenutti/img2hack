@@ -1,6 +1,6 @@
 import QtCore
-import QtQuick 2.0
-import QtQuick.Controls 2.0
+import QtQuick 2.7
+import QtQuick.Controls 2.1
 import QtQuick.Dialogs
 
 import example 1.0
@@ -46,10 +46,18 @@ ApplicationWindow {
             }
         }
 
+        TextField {
+            text: thresholdSlider.value.toFixed(2)
+            enabled: thresholdSlider.enabled
+            onEditingFinished: {
+                let clampedValue = Math.min(Math.max(parseFloat(text), thresholdSlider.from), thresholdSlider.to);
+                text = clampedValue.toFixed(2);
+                thresholdSlider.value = clampedValue;
+            }
+        }
+
         Image {
             id: originalImage
-            width: 300
-            height: 300
             fillMode: Image.Stretch
         }
 
