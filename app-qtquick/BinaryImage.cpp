@@ -57,10 +57,33 @@ void BinaryImage::threshold( float value )
     }
 }
 
+bool BinaryImage::invert() const
+{
+    return m_invert;
+}
+
+void BinaryImage::invert( bool value )
+{
+    if ( m_invert != value )
+    {
+        m_invert = value;
+
+        emit invertChanged();
+
+        m_imageProcessed.invertPixels();
+        update();
+    }
+}
+
 void BinaryImage::processImage()
 {
     constexpr auto white = qRgb( 255, 255, 255 );
     constexpr auto black = qRgb( 0, 0, 0 );
+
+    const auto pixelOn  = m_invert ? white : black;
+    const auto pixelOff = m_invert ? black : white;
+
+    const auto limit = static_cast<int>( m_threshold * 255 / 100.0f );
 
     const auto width  = m_imageProcessed.width();
     const auto height = m_imageProcessed.height();
@@ -69,11 +92,7 @@ void BinaryImage::processImage()
     {
         for ( int y = 0; y < height; ++y )
         {
-            m_imageProcessed.setPixel(
-                x,
-                y,
-                qGray( m_imageOriginal.pixel( x, y ) ) > static_cast<int>( m_threshold * 255 / 100.0f ) ? white
-                                                                                                        : black );
+            m_imageProcessed.setPixel( x, y, qGray( m_imageOriginal.pixel( x, y ) ) > limit ? pixelOff : pixelOn );
         }
     }
 }
