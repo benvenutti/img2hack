@@ -10,7 +10,7 @@ class BinaryImage : public QQuickPaintedItem
 {
     Q_OBJECT
     Q_PROPERTY( QUrl imageUrl READ imageUrl WRITE imageUrl NOTIFY imageUrlChanged )
-    Q_PROPERTY( int threshold READ threshold WRITE threshold NOTIFY thresholdChanged )
+    Q_PROPERTY( float threshold READ threshold WRITE threshold NOTIFY thresholdChanged )
     Q_PROPERTY( bool invert READ invert WRITE invert NOTIFY invertChanged )
     QML_ELEMENT
 
