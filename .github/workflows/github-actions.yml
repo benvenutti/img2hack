@@ -1,4 +1,4 @@
-name: img2hack build actions
+name: build
 
 on: [push]
 
