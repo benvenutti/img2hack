@@ -1,4 +1,4 @@
-# img2hack ![example workflow](https://github.com/benvenutti/img2hack/actions/workflows/github-actions.yml/badge.svg)
+# img2hack ![example workflow](https://github.com/benvenutti/img2hack/actions/workflows/ci.yaml/badge.svg)
 
 This project is a small desktop program that converts image files to Hack assembly files. The assembly file is to be run on a Hack simulator/computer, where the code will output the original image to its screen. For more information on the Hack computer, take a look at [nand2tetris](http://nand2tetris.org/).
 
@@ -12,10 +12,10 @@ Watch this [video](https://www.youtube.com/watch?v=i8HHfCDsWSE) to see **img2hac
 
 The following list enumerates the tools and dependencies' minimum requirements:
 
-* C++11 compiler
-* CMake 3.2
-* Magick++ 7.0
-* Qt5 Widgets
+* C++17 compiler
+* CMake 3.25 or higher
+* Qt 6.5
+* Catch 2 (this dependency is managed by the main CMake script)
 
 #### Configuring and Compiling
 
