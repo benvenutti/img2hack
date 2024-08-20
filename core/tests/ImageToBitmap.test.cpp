@@ -40,6 +40,6 @@ TEST_CASE( "ImageToBitmap: valid image" )
     const auto& bitmap = std::get<Bitmap>( result );
 
     REQUIRE( bitmap.size() == 2 );
-    REQUIRE( bitmap.find( std::int16_t( 0b1111111111111111 ) ) != bitmap.end() );
-    REQUIRE( bitmap.find( std::int16_t( 0b0000000000000000 ) ) != bitmap.end() );
+    REQUIRE( bitmap.find( std::int16_t( -1 ) ) != bitmap.end() );
+    REQUIRE( bitmap.find( std::int16_t( 0 ) ) != bitmap.end() );
 }

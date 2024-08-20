@@ -25,7 +25,7 @@ std::size_t bitmapToAssembly( std::ofstream& out, const Bitmap& bitmap )
             continue;
         }
 
-        const std::bitset<16> bin( word );
+        const std::bitset<16> bin( static_cast<unsigned long long>( word ) );
 
         if ( word == -1 || word == 1 )
         {

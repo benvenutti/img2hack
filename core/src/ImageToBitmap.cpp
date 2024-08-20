@@ -56,7 +56,7 @@ Result imageToBitmap( const std::filesystem::path& pathToImage )
 
                 if ( pixel != white )
                 {
-                    word |= mask;
+                    word = static_cast<std::int16_t>( word | mask );
                 }
             }
 

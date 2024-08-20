@@ -15,6 +15,8 @@ qt_add_executable(img2hack-gui-qtwidget
   ${RESOURCES}
 )
 
+set_target_properties(img2hack-gui-qtwidget PROPERTIES COMPILE_WARNING_AS_ERROR ON)
+
 target_link_libraries(img2hack-gui-qtwidget
   PUBLIC Qt6::Widgets
   PRIVATE core
