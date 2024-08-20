@@ -13,6 +13,8 @@ add_library(
 
 target_compile_features(core PUBLIC cxx_std_17)
 
+set_target_properties(core PROPERTIES COMPILE_WARNING_AS_ERROR ON)
+
 target_include_directories(core PUBLIC include)
 
 target_link_libraries(
