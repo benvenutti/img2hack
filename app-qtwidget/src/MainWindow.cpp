@@ -82,7 +82,7 @@ void MainWindow::logOpenFile( QString fileName )
     log( s );
 }
 
-void MainWindow::logExportToHack( QString fileName, QString path, int numLines )
+void MainWindow::logExportToHack( QString fileName, QString path, const std::size_t numLines )
 {
     log( "> Exported .ASM file to: " + fileName );
     log( "  At: " + path );

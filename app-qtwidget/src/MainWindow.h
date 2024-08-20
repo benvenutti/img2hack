@@ -36,7 +36,7 @@ private:
     void renderImage();
     void render( const QImage& image );
     void log( QString message );
-    void logExportToHack( QString filaName, QString m_path, int numLines );
+    void logExportToHack( QString filaName, QString m_path, std::size_t numLines );
     void logExportToImage( QString filaName, QString m_path );
     void logOpenFile( QString fileName );
     void resetControls();
