@@ -25,10 +25,17 @@ jobs:
           version: '6.5.*'
           target: 'desktop'
 
-      - name: Configure and Build
-        run: |
-          mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
-          cmake --build . --config ${{ matrix.build_type }}
-          ctest -C ${{ matrix.build_type }} -VV .
+      - name: Create build directory
+        run: mkdir build
+
+      - name: Configure
+        working-directory: ${{github.workspace}}/build
+        run: cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build . --config ${{ matrix.build_type }}
+
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        run: ctest -C ${{ matrix.build_type }} -VV .
