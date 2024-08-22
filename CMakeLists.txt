@@ -10,19 +10,23 @@ project(
   LANGUAGES    CXX
 )
 
+option(BUILD_TESTS "Build tests" ON)
+
 # dependencies:
 
-Include(FetchContent)
-
-FetchContent_Declare(
-  Catch2
-  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG        v3.0.1
-)
-
-FetchContent_MakeAvailable(Catch2)
-
 find_package(Qt6 6.2 COMPONENTS Core Gui Quick Widgets Qml REQUIRED)
+
+if(BUILD_TESTS)
+    Include(FetchContent)
+
+  FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG        v3.0.1
+  )
+
+  FetchContent_MakeAvailable(Catch2)
+endif()
 
 # compiler definitions:
 
