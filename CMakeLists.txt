@@ -10,6 +10,8 @@ project(
   LANGUAGES    CXX
 )
 
+option(BUILD_APP_QTQUICK "Build img2hack (QtQuick-based application)" ON)
+option(BUILD_APP_QTWIDGET "Build img2hack (QtWidget-based application)" ON)
 option(BUILD_TESTS "Build tests" ON)
 
 # dependencies:
@@ -17,7 +19,7 @@ option(BUILD_TESTS "Build tests" ON)
 find_package(Qt6 6.2 COMPONENTS Core Gui Quick Widgets Qml REQUIRED)
 
 if(BUILD_TESTS)
-    Include(FetchContent)
+  include(FetchContent)
 
   FetchContent_Declare(
     Catch2
@@ -44,10 +46,20 @@ else()
   )
 endif()
 
+# testing:
+
+if(BUILD_TESTS)
+  enable_testing()
+endif()
+
 # subdirectories:
 
-enable_testing()
+if(BUILD_APP_QTQUICK)
+  add_subdirectory(app-qtquick)
+endif()
 
-add_subdirectory(app-qtquick)
-add_subdirectory(app-qtwidget)
+if(BUILD_APP_QTWIDGET)
+  add_subdirectory(app-qtwidget)
+endif()
+
 add_subdirectory(core)
