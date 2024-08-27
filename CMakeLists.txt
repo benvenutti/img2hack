@@ -10,6 +10,8 @@ project(
   LANGUAGES    CXX
 )
 
+option(BUILD_APP_QTQUICK "Build img2hack (QtQuick-based application)" ON)
+option(BUILD_APP_QTWIDGET "Build img2hack (QtWidget-based application)" ON)
 option(BUILD_TESTS "Build tests" ON)
 
 # dependencies:
@@ -52,6 +54,12 @@ endif()
 
 # subdirectories:
 
-add_subdirectory(app-qtquick)
-add_subdirectory(app-qtwidget)
+if(BUILD_APP_QTQUICK)
+  add_subdirectory(app-qtquick)
+endif()
+
+if(BUILD_APP_QTWIDGET)
+  add_subdirectory(app-qtwidget)
+endif()
+
 add_subdirectory(core)
