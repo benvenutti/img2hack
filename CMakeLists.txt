@@ -17,7 +17,7 @@ option(BUILD_TESTS "Build tests" ON)
 find_package(Qt6 6.2 COMPONENTS Core Gui Quick Widgets Qml REQUIRED)
 
 if(BUILD_TESTS)
-    Include(FetchContent)
+  include(FetchContent)
 
   FetchContent_Declare(
     Catch2
@@ -44,9 +44,13 @@ else()
   )
 endif()
 
-# subdirectories:
+# testing:
 
-enable_testing()
+if(BUILD_TESTS)
+  enable_testing()
+endif()
+
+# subdirectories:
 
 add_subdirectory(app-qtquick)
 add_subdirectory(app-qtwidget)
