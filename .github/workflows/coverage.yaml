@@ -41,7 +41,7 @@ jobs:
 
       - name: Test
         working-directory: ${{runner.workspace}}/build
-        run: ctest -C Debug -VV .
+        run: ctest --build-config Debug --extra-verbose .
 
       - name: Gather test coverage
         working-directory: ${{runner.workspace}}/build
