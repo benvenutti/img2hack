@@ -21,17 +21,40 @@ jobs:
           version: '6.5.*'
           target: 'desktop'
 
+      - name: Install dependencies
+        run: sudo apt-get install -o Acquire::Retries=3 lcov
+
       - name: Create build directory
-        run: cmake -E make_directory ${{github.workspace}}/build
+        run: cmake -E make_directory ${{runner.workspace}}/build
 
       - name: Configure
-        working-directory: ${{github.workspace}}/build
-        run: cmake -DCMAKE_BUILD_TYPE=Debug -DCODE_COVERAGE=ON ..
+        working-directory: ${{runner.workspace}}/build
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Debug -DCODE_COVERAGE=ON ..
 
       - name: Build
-        working-directory: ${{github.workspace}}/build
+        working-directory: ${{runner.workspace}}/build
         run: cmake --build . --config Debug --verbose
 
+      - name: Gather baseline coverage
+        working-directory: ${{runner.workspace}}/build
+        run: lcov --directory . --capture --initial --output-file baseline.info
+
       - name: Test
-        working-directory: ${{github.workspace}}/build
+        working-directory: ${{runner.workspace}}/build
         run: ctest -C Debug -VV .
+
+      - name: Gather test coverage
+        working-directory: ${{runner.workspace}}/build
+        run: lcov --directory . --capture --output-file test.info
+
+      - name: Generate coverage report
+        working-directory: ${{runner.workspace}}/build
+        run: |
+          lcov -a baseline.info -a test.info --output-file coverage.info
+          genhtml --demangle-cpp -o coverage coverage.info
+
+      - name: Upload results to Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          path-to-lcov: ${{runner.workspace}}/build/coverage.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
