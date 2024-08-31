@@ -1,4 +1,4 @@
-name: build
+name: continuous integration
 
 on: [push]
 
