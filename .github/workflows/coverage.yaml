@@ -1,0 +1,37 @@
+name: coverage
+
+on: [push]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Checkout LFS objects
+        run: git lfs pull
+
+      - name: Install Qt 6.5
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.5.*'
+          target: 'desktop'
+
+      - name: Create build directory
+        run: cmake -E make_directory ${{github.workspace}}/build
+
+      - name: Configure
+        working-directory: ${{github.workspace}}/build
+        run: cmake -DCMAKE_BUILD_TYPE=Debug -DCODE_COVERAGE=ON ..
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build . --config Debug --verbose
+
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        run: ctest -C Debug -VV .
