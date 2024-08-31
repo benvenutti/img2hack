@@ -10,17 +10,23 @@ project(
   LANGUAGES    CXX
 )
 
+# modules:
+
+include(CMakeDependentOption)
+include(FetchContent)
+
+# project options:
+
 option(BUILD_APP_QTQUICK "Build img2hack (QtQuick-based application)" ON)
 option(BUILD_APP_QTWIDGET "Build img2hack (QtWidget-based application)" ON)
 option(BUILD_TESTS "Build tests" ON)
+cmake_dependent_option(CODE_COVERAGE "Enable code coverage" OFF "BUILD_TESTS" OFF)
 
 # dependencies:
 
 find_package(Qt6 6.2 COMPONENTS Core Gui Quick Widgets Qml REQUIRED)
 
 if(BUILD_TESTS)
-  include(FetchContent)
-
   FetchContent_Declare(
     Catch2
     GIT_REPOSITORY https://github.com/catchorg/Catch2.git
@@ -34,15 +40,29 @@ endif()
 
 if(MSVC)
   add_compile_options(
-    /W4 /w14545 /w34242 /w34254 /w34287 /w44263 /w44265
-    /w44296 /w44311 /w44826 /we4289 /w14546 /w14547 /w14549 /w14555 /w14619
-    /w14905 /w14906 /w14928
+    # warnings:
+    /W4 /w14545 /w34242 /w34254 /w34287 /w44263 /w44265  /w44296 /w44311 /w44826
+    /we4289 /w14546 /w14547 /w14549 /w14555 /w14619 /w14905 /w14906 /w14928
+
+    # optimization levels:
+    $<$<CONFIG:DEBUG>:/Od>
   )
 else()
   add_compile_options(
-    -Wall -Wextra -Wconversion -Wsign-conversion -Wshadow
-    -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wcast-qual -Wunused
-    -Woverloaded-virtual -pedantic
+    # warnings:
+    -Wall -Wconversion -Wsign-conversion -Wshadow -Wnon-virtual-dtor -Wcast-qual
+    -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -pedantic -Wextra
+
+    # optimization levels:
+    $<$<CONFIG:DEBUG>:-O0>
+
+    # coverage:
+    $<$<BOOL:${CODE_COVERAGE}>:-coverage>
+  )
+
+  add_link_options(
+    # coverage:
+    $<$<BOOL:${CODE_COVERAGE}>:-coverage>
   )
 endif()
 
