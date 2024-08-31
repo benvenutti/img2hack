@@ -26,16 +26,16 @@ jobs:
           target: 'desktop'
 
       - name: Create build directory
-        run: mkdir build
+        run: cmake -E make_directory ${{github.workspace}}/build
 
       - name: Configure
         working-directory: ${{github.workspace}}/build
-        run: cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
+        run: cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_TESTS=ON ..
 
       - name: Build
         working-directory: ${{github.workspace}}/build
-        run: cmake --build . --config ${{ matrix.build_type }}
+        run: cmake --build . --config ${{ matrix.build_type }} --verbose
 
       - name: Test
         working-directory: ${{github.workspace}}/build
-        run: ctest -C ${{ matrix.build_type }} -VV .
+        run: ctest --build-config ${{ matrix.build_type }} --extra-verbose .
