@@ -45,6 +45,7 @@ if(MSVC)
     /we4289 /w14546 /w14547 /w14549 /w14555 /w14619 /w14905 /w14906 /w14928
 
     # optimization levels:
+    $<$<CONFIG:RELEASE>:/O2>
     $<$<CONFIG:DEBUG>:/Od>
   )
 else()
@@ -54,6 +55,7 @@ else()
     -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -pedantic -Wextra
 
     # optimization levels:
+    $<$<CONFIG:RELEASE>:-O3>
     $<$<CONFIG:DEBUG>:-O0>
 
     # coverage:
