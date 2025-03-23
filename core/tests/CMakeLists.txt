@@ -3,7 +3,7 @@ add_executable(core_tests
   ImageToBitmap.test.cpp
 )
 
-target_compile_features(core_tests PUBLIC cxx_std_17)
+target_compile_features(core_tests PUBLIC cxx_std_20)
 
 set_target_properties(core_tests PROPERTIES COMPILE_WARNING_AS_ERROR ON)
 
